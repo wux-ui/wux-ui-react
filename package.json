@@ -1,0 +1,12 @@
+{
+  "name": "wuxui-react",
+  "version": "0.0.1",
+  "description": ".",
+  "main": "index.js",
+  "keywords": [
+    "wuxui"
+  ],
+  "author": "Slouchwind",
+  "license": "MIT",
+  "types": "./index.d.ts"
+}
