@@ -52,7 +52,7 @@ interface ButtonProps {
     disabled?: boolean;
 }
 
-const Wux: {
+const WuX: {
     /**Basic element */
     Basic: (props: any) => JSX.Element;
     /**Header element  
@@ -81,4 +81,4 @@ const Wux: {
     Button: (props: ButtonProps) => JSX.Element;
 }
 
-export default Wux;
+export default WuX;

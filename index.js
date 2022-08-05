@@ -1,7 +1,7 @@
 import React from "react"
 import "./import.css"
 
-const Wux = {
+const WuX = {
     Basic: props => <div className="wux-header-fixed-margin">{props.children}</div>,
     Header: props => {
         var optionGroup = props.option.map((v, i) =>
@@ -39,4 +39,4 @@ const Wux = {
     }
 }
 
-export default Wux;
+export default WuX;
