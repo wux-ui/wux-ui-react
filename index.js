@@ -18,15 +18,24 @@ const Wux = {
         </nav>
     },
     Col: props => <div className="wux-col">{props.children}</div>,
-    Alert: {
-        Primary: props => <div className="wux-alert wux-alert-primary">{props.children}</div>,
-        Secondary: props => <div className="wux-alert wux-alert-secondary">{props.children}</div>,
-        Success: props => <div className="wux-alert wux-alert-success">{props.children}</div>,
-        Info: props => <div className="wux-alert wux-alert-info">{props.children}</div>,
-        Warning: props => <div className="wux-alert wux-alert-warning">{props.children}</div>,
-        Error: props => <div className="wux-alert wux-alert-error">{props.children}</div>,
-        Light: props => <div className="wux-alert wux-alert-light">{props.children}</div>,
-        Icon: props => <span className="wux-alert-icon">{props.children}</span>,
+    Alert: props => {
+        if (props.type === 'icon') return <span className="wux-alert-icon">{props.children}</span>
+        else return <div className={`wux-alert wux-alert-${props.type}`}>{props.children}</div>
+    },
+    Button: props => {
+        var type;
+        if (props.type) {
+            type = props.type.constructor.toString().split(' ')[1].split('(')[0];
+            switch (type) {
+                case 'String':
+                    return <button className={`wux-btn wux-btn-${props.type}`} disabled={props.disabled}>{props.children}</button>
+                case 'Array':
+                    var className = 'wux-btn';
+                    props.type.forEach(v => className += ` wux-btn-${v}`);
+                    return <button className={className} disabled={props.disabled}>{props.children}</button>
+            }
+        }
+        else return <button className="wux-btn" disabled={props.disabled}>{props.children}</button>
     }
 }
 
