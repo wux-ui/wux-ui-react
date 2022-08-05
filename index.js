@@ -2,7 +2,7 @@ import React from "react"
 import "./import.css"
 
 const WuX = {
-    Basic: props => <div className="wux-header-fixed-margin">{props.children}</div>,
+    HeaderMargin: props => <div className="wux-header-fixed-margin">{props.children}</div>,
     Header: props => {
         var optionGroup = props.option.map((v, i) =>
             <a
@@ -16,6 +16,18 @@ const WuX = {
             <span className="wux-header-title">{props.title}</span>
             <span className="wux-header-option-group">{optionGroup}</span>
         </nav>
+    },
+    Container: props => <div className="wux-container">{props.children}</div>,
+    Row: props => {
+        var type = props.size.constructor.toString().split(' ')[1].split('(')[0];
+        switch (type) {
+            case 'String':
+                return <div className={`wux-row-${props.size}-${props.number}`}>{props.children}</div>
+            case 'Array':
+                var className = '';
+                props.size.forEach((_, i) => className += ` wux-row-${props.size[i]}-${props.number[i]}`);
+                return <div className={className.slice(1)} disabled={props.disabled}>{props.children}</div>
+        }
     },
     Col: props => <div className="wux-col">{props.children}</div>,
     Alert: props => {
@@ -36,6 +48,16 @@ const WuX = {
             }
         }
         else return <button className="wux-btn" disabled={props.disabled}>{props.children}</button>
+    },
+    Breadcrumb: props => {
+        var type = props.item.constructor.toString().split(' ')[1].split('(')[0];
+        switch (type) {
+            case 'String':
+                return <ul className="wux-breadcrumb"><li className="wux-breadcrumb-item">{props.item}</li></ul>
+            case 'Array':
+                var breadcrumbItems = props.item.map((v, i) => <li className="wux-breadcrumb-item" key={i}>{v}</li>);
+                return <ul className="wux-breadcrumb">{breadcrumbItems}</ul>
+        }
     }
 }
 

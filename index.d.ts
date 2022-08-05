@@ -28,6 +28,27 @@ type ButtonTypes =
     'round' |
     'block';
 
+type RowSizes =
+    'xs' |
+    'sm' |
+    'md' |
+    'lg' |
+    'xl';
+
+type RowNumbers =
+    '1' |
+    '2' |
+    '3' |
+    '4' |
+    '5' |
+    '6' |
+    '7' |
+    '8' |
+    '9' |
+    '10' |
+    '11' |
+    '12';
+
 interface HeaderOption {
     0: string
     1: string
@@ -52,9 +73,18 @@ interface ButtonProps {
     disabled?: boolean;
 }
 
+interface RowProps {
+    size: RowSizes | RowSizes[];
+    number: RowNumbers | RowNumbers[];
+}
+
+interface BreadcrumbProps {
+    item: string | string[]
+}
+
 const WuX: {
-    /**Basic element */
-    Basic: (props: any) => JSX.Element;
+    /**Header fixed margin */
+    HeaderMargin: (props: any) => JSX.Element;
     /**Header element  
      *   
      * The param `props` should be an object with `title` and `option` as properties  
@@ -73,6 +103,12 @@ const WuX: {
      * ```
      */
     Header: (props: HeaderProps) => JSX.Element,
+    /**Container element */
+    Container: (props: any) => JSX.Element,
+    /**Row element */
+    Row: (props: RowProps) => JSX.Element,
+    /**Breadcrumb element */
+    Breadcrumb: (props: BreadcrumbProps) => JSX.Element,
     /**Col element */
     Col: (props: any) => JSX.Element;
     /**Alert element */
