@@ -8,5 +8,13 @@
   ],
   "author": "Slouchwind",
   "license": "MIT",
-  "types": "./index.d.ts"
+  "types": "./index.d.ts",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/wux-ui/wux-ui-react.git"
+  },
+  "bugs": {
+    "url": "https://github.com/wux-ui/wux-ui-react/issues"
+  },
+  "homepage": "https://github.com/wux-ui/wux-ui-react#readme"
 }

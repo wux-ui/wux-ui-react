@@ -27,6 +27,8 @@ const WuX = {
                 var className = '';
                 props.size.forEach((_, i) => className += ` wux-row-${props.size[i]}-${props.number[i]}`);
                 return <div className={className.slice(1)} disabled={props.disabled}>{props.children}</div>
+            default:
+                break;
         }
     },
     Col: props => <div className="wux-col">{props.children}</div>,
@@ -57,7 +59,48 @@ const WuX = {
             case 'Array':
                 var breadcrumbItems = props.item.map((v, i) => <li className="wux-breadcrumb-item" key={i}>{v}</li>);
                 return <ul className="wux-breadcrumb">{breadcrumbItems}</ul>
+            default:
+                break;
         }
+    },
+    Card: props =>
+        <div className="wux-card wux-card-hover">
+            <div className="wux-card-header">{props.header}</div>
+            <div className="wux-card-body">{props.body}</div>
+            <div className="wux-card-footer">{props.footer}</div>
+        </div>,
+    Dialog: props => {
+        var CancelBtn = props.cancel;
+        var FooterBtn = props.footer.props.children;
+        var type = FooterBtn.constructor.toString().split(' ')[1].split('(')[0];
+        var footer;
+        switch (type) {
+            case 'String':
+                footer = props.footer;
+                break;
+            case 'Object':
+                footer = FooterBtn.map(V => <V.type type="submit" {...V.props} />);
+                break;
+            default:
+                break;
+        }
+        return <>
+            <button className="wux-btn" onClick={() => { document.getElementById(props.id).showModal() }}>{props.children}</button>
+            <dialog className="wux-dialog" id={props.id}>
+                <div className="wux-dialog-header">
+                    <h1 className="wux-dialog-header-title">{props.header}</h1>
+                </div>
+                <div className="wux-dialog-body">{props.body}</div>
+                <div className="wux-dialog-footer">
+                    <div className="wux-dialog-footer-group">
+                        <form method="dialog">
+                            <CancelBtn.type onClick={() => { document.getElementById(props.id).close() }} {...CancelBtn.props} />
+                            {footer}
+                        </form>
+                    </div>
+                </div>
+            </dialog>
+        </>
     }
 }
 

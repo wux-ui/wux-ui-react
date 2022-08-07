@@ -79,7 +79,21 @@ interface RowProps {
 }
 
 interface BreadcrumbProps {
-    item: string | string[]
+    item: string | string[];
+}
+
+interface CardProps {
+    header: JSX.Element;
+    body: string | JSX.Element;
+    footer: JSX.Element;
+}
+
+interface DialogProps {
+    id: string;
+    header: string;
+    body: string | JSX.Element;
+    cancel: JSX.Element;
+    footer: JSX.Element;
 }
 
 const WuX: {
@@ -102,19 +116,24 @@ const WuX: {
      * />
      * ```
      */
-    Header: (props: HeaderProps) => JSX.Element,
+    Header: (props: HeaderProps) => JSX.Element;
     /**Container element */
-    Container: (props: any) => JSX.Element,
+    Container: (props: any) => JSX.Element;
     /**Row element */
-    Row: (props: RowProps) => JSX.Element,
-    /**Breadcrumb element */
-    Breadcrumb: (props: BreadcrumbProps) => JSX.Element,
+    Row: (props: RowProps) => JSX.Element;
     /**Col element */
     Col: (props: any) => JSX.Element;
     /**Alert element */
     Alert: (props: AlertProps) => JSX.Element;
     /**Button element */
     Button: (props: ButtonProps) => JSX.Element;
+    /**Breadcrumb element */
+    Breadcrumb: (props: BreadcrumbProps) => JSX.Element;
+    Button: (props: ButtonProps) => JSX.Element;
+    /**Card element */
+    Card: (props: CardProps) => JSX.Element;
+    /**Dialog element */
+    Dialog: (props: DialogProps) => JSX.Element;
 }
 
 export default WuX;
