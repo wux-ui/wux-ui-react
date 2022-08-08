@@ -6,7 +6,7 @@ const WuX = {
     Header: props => {
         var optionGroup = props.option.map((v, i) =>
             <a
-                className="wux-header-option"
+                className={`wux-header-option${v[2] ? ' wux-header-option-bold' : ''}`}
                 href={v[1]}
                 key={i}>
                 {v[0]}
@@ -47,6 +47,8 @@ const WuX = {
                     var className = 'wux-btn';
                     props.type.forEach(v => className += ` wux-btn-${v}`);
                     return <button className={className} disabled={props.disabled}>{props.children}</button>
+                default:
+                    break;
             }
         }
         else return <button className="wux-btn" disabled={props.disabled}>{props.children}</button>
@@ -71,6 +73,7 @@ const WuX = {
         </div>,
     Dialog: props => {
         var CancelBtn = props.cancel;
+        var Cancel = props.cancel.type;
         var FooterBtn = props.footer.props.children;
         var type = FooterBtn.constructor.toString().split(' ')[1].split('(')[0];
         var footer;
@@ -94,14 +97,28 @@ const WuX = {
                 <div className="wux-dialog-footer">
                     <div className="wux-dialog-footer-group">
                         <form method="dialog">
-                            <CancelBtn.type onClick={() => { document.getElementById(props.id).close() }} {...CancelBtn.props} />
+                            <Cancel onClick={() => { document.getElementById(props.id).close() }} {...CancelBtn.props} />
                             {footer}
                         </form>
                     </div>
                 </div>
             </dialog>
         </>
-    }
+    },
+    Dropdown: props => {
+        var items = props.menu.map((v, i) => <li className="wux-dropdown-item" key={i}>{v}</li>);
+        return <div className="wux-dropdown">
+            <button className="wux-btn wux-dropdown-trigger">{props.children}</button>
+            <ul className="wux-dropdown-menu">{items}</ul>
+        </div>
+    },
+    Input: props =>
+        <input
+            className={`wux-form-input wux-form-input-${props.size}`}
+            placeholder={props.children}
+            type="url"
+            disabled={props.disabled}
+        />,
 }
 
 export default WuX;

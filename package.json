@@ -1,12 +1,12 @@
 {
-  "name": "wuxui-react",
+  "name": "@wux-ui/react",
   "version": "0.0.1",
-  "description": ".",
+  "description": "WuX-UI for React.js",
   "main": "index.js",
   "keywords": [
     "wuxui"
   ],
-  "author": "Slouchwind",
+  "author": "slouchwind",
   "license": "MIT",
   "types": "./index.d.ts",
   "repository": {
