@@ -1,5 +1,22 @@
-import React from "react"
-import "./import.css"
+import React from "react";
+import "./import.css";
+
+function getClass(defaultValue, type) {
+    if (type) {
+        var typeType = type.constructor.toString().split(' ')[1].split('(')[0];
+        switch (typeType) {
+            case 'String':
+                return `${defaultValue} ${defaultValue}-${type}`;
+            case 'Array':
+                var className = defaultValue;
+                type.forEach(v => className += ` ${defaultValue}-${v}`);
+                return className;
+            default:
+                break;
+        }
+    }
+    else return defaultValue;
+}
 
 const WuX = {
     HeaderMargin: props => <div className="wux-header-fixed-margin">{props.children}</div>,
@@ -37,21 +54,8 @@ const WuX = {
         else return <div className={`wux-alert wux-alert-${props.type}`}>{props.children}</div>
     },
     Button: props => {
-        var type;
-        if (props.type) {
-            type = props.type.constructor.toString().split(' ')[1].split('(')[0];
-            switch (type) {
-                case 'String':
-                    return <button className={`wux-btn wux-btn-${props.type}`} disabled={props.disabled}>{props.children}</button>
-                case 'Array':
-                    var className = 'wux-btn';
-                    props.type.forEach(v => className += ` wux-btn-${v}`);
-                    return <button className={className} disabled={props.disabled}>{props.children}</button>
-                default:
-                    break;
-            }
-        }
-        else return <button className="wux-btn" disabled={props.disabled}>{props.children}</button>
+        const { type, children, ...otherProps } = props;
+        return <button className={getClass('wux-btn', type)}  {...otherProps}>{children}</button>
     },
     Breadcrumb: props => {
         var type = props.item.constructor.toString().split(' ')[1].split('(')[0];
@@ -72,33 +76,34 @@ const WuX = {
             <div className="wux-card-footer">{props.footer}</div>
         </div>,
     Dialog: props => {
-        var CancelBtn = props.cancel;
-        var Cancel = props.cancel.type;
-        var FooterBtn = props.footer.props.children;
+        const { id, header, body, cancel, footer, children, ...otherProps } = props;
+        var cancelBtn = cancel;
+        var Cancel = cancel.type;
+        var FooterBtn = footer.props.children;
         var type = FooterBtn.constructor.toString().split(' ')[1].split('(')[0];
-        var footer;
+        var footerElement;
         switch (type) {
             case 'String':
-                footer = props.footer;
+                footerElement = footer;
                 break;
             case 'Object':
-                footer = FooterBtn.map(V => <V.type type="submit" {...V.props} />);
+                footerElement = FooterBtn.map(V => <V.type type="submit" {...V.props} />);
                 break;
             default:
                 break;
         }
         return <>
-            <button className="wux-btn" onClick={() => { document.getElementById(props.id).showModal() }}>{props.children}</button>
-            <dialog className="wux-dialog" id={props.id}>
+            <button className="wux-btn" onClick={() => { document.getElementById(id).showModal() }}>{children}</button>
+            <dialog className="wux-dialog" id={id} {...otherProps}>
                 <div className="wux-dialog-header">
-                    <h1 className="wux-dialog-header-title">{props.header}</h1>
+                    <h1 className="wux-dialog-header-title">{header}</h1>
                 </div>
-                <div className="wux-dialog-body">{props.body}</div>
+                <div className="wux-dialog-body">{body}</div>
                 <div className="wux-dialog-footer">
                     <div className="wux-dialog-footer-group">
                         <form method="dialog">
-                            <Cancel onClick={() => { document.getElementById(props.id).close() }} {...CancelBtn.props} />
-                            {footer}
+                            <Cancel onClick={() => { document.getElementById(id).close() }} {...cancelBtn.props} />
+                            {footerElement}
                         </form>
                     </div>
                 </div>
@@ -112,13 +117,96 @@ const WuX = {
             <ul className="wux-dropdown-menu">{items}</ul>
         </div>
     },
-    Input: props =>
-        <input
-            className={`wux-form-input wux-form-input-${props.size}`}
-            placeholder={props.children}
+    Input: props => {
+        const { size, children, ...otherProps } = props;
+        return <input
+            className={`wux-form-input wux-form-input-${size}`}
+            placeholder={children}
             type="url"
-            disabled={props.disabled}
-        />,
+            {...otherProps}
+        />
+    },
+    Textarea: props => {
+        const { children, ...otherProps } = props;
+        return <textarea className="wux-form-input wux-form-input-md" placeholder={children} {...otherProps} />
+    },
+    Check: props => {
+        const { checked = false, children, ...otherProps } = props;
+        const [state, setState] = React.useState({ checked: checked });
+        return <label>
+            <input
+                className="wux-form-checks"
+                type="checkbox"
+                checked={state.checked}
+                onChange={() => { setState({ checked: !state.checked }) }}
+                {...otherProps} />
+            {children}
+        </label>
+    },
+    Radio: props => {
+        const { Suffix = <br />, children, ...otherProps } = props;
+        var radios = children.map((v, i) => [
+            <label key={`label-${i}`}>
+                <input className="wux-form-radios" type="radio" name="contact" {...otherProps} />
+                {v}
+            </label>,
+            (i !== children.length - 1) && <Suffix.type key={`text-${i}`} {...Suffix.props} />
+        ]);
+        return <form>{radios}</form>
+    },
+    Range: props => <input className="wux-form-range" type="range" {...props} />,
+    Select: props => {
+        var { value, children, ...otherProps } = props;
+        value = value || children[0];
+        const [state, setState] = React.useState({ value: value });
+        var options = children.map((v, i) => <option key={i}>{v}</option>)
+        return <select
+            className="wux-form-select"
+            onChange={(e) => { setState(e.target.value) }}
+            value={state.value}
+            {...otherProps}
+        >{options}</select>
+    },
+    Upload: props => <input className="wux-form-upload" type="file" {...props} />,
+    Loading: props => {
+        const { type, ...otherProps } = props
+        switch (type) {
+            case "button":
+                return <button className="wux-btn wux-loading" {...otherProps} />
+            case "span":
+                return <span className="wux-loading" {...otherProps} />
+            default:
+                break;
+        }
+    },
+    Jumbotron: props => {
+        const { title, subtitle, btn, ...otherProps } = props;
+        var linkBtn = btn.map((v, i) => {
+            const { type, children } = v[1].props;
+            return <a href={v[0]} key={i} className={getClass('wux-btn', type)}  {...v[2]}>{children}</a>;
+        })
+        return <div className="wux-jumbotron" {...otherProps}>
+            <h1 className="wux-jumbotron-title">{title}</h1>
+            <p className="wux-jumbotron-subtitle">{subtitle}</p>
+            <div className="wux-jumbotron-btn-group">{linkBtn}</div>
+        </div>
+    },
+    List: props => {
+        const { type, children, ...otherProps } = props;
+        var group = children.map((v, i) => <li className={getClass(`wux-list-item`, type[i])} key={i}>{v}</li>);
+        return <ul className="wux-list-group" {...otherProps}>{group}</ul>
+    },
+    Progress: props => {
+        const { value, max, ...otherProps } = props;
+        return <progress className="wux-progress" value={String(value)} max={String(max)}  {...otherProps} />
+    },
+    Tooltip: props => {
+        const { btn = (<WuX.Button />), type, text, children, ...otherProps } = props;
+        return <button className={`${getClass('wux-btn', btn.props.type)} wux-tooltip`} {...otherProps}>
+            {children}
+            <span class={`wux-tooltip-item wux-tooltip-item-${type}`}>{text}</span>
+        </button>
+    }
 }
 
 export default WuX;

@@ -1,3 +1,5 @@
+import React from 'react';
+
 type AlertTypes =
     'primary' |
     'secondary' |
@@ -57,19 +59,32 @@ type InputSizes =
     'lg' |
     'xl';
 
-interface HeaderOption {
-    0: string;
-    1: string;
-    2: boolean;
-}
+type ListTypes =
+    'action' |
+    'focus';
+
+type TooltipTypes =
+    'top' |
+    'bottom' |
+    'right' |
+    'left';
+
+type HeaderOption = [
+    string,
+    string,
+    boolean | undefined,
+]
+
+type JumbotronBtn = [
+    string,
+    JSX.Element,
+    React.AllHTMLAttributes<T> | undefined,
+]
 
 interface HeaderProps {
-    /**a string show as title  */
+    /**a string as the title */
     title: string;
-    /**an Array show as links at right  
-     * `HeaderOption[0]` is the link title  
-     * `HeaderOption[1]` is the link
-     */
+    /**an array and links each item of the array to the second item displayed on the right with the first item as the title */
     option?: HeaderOption[];
 }
 
@@ -77,9 +92,8 @@ interface AlertProps {
     type: AlertTypes;
 }
 
-interface ButtonProps {
+interface ButtonProps extends React.ButtonHTMLAttributes<T> {
     type: ButtonTypes | ButtonTypes[];
-    disabled?: boolean;
 }
 
 interface RowProps {
@@ -97,7 +111,7 @@ interface CardProps {
     footer: JSX.Element;
 }
 
-interface DialogProps {
+interface DialogProps extends React.DialogHTMLAttributes<T> {
     id: string;
     header: string;
     body: string | JSX.Element;
@@ -112,6 +126,46 @@ interface DropdownProps {
 interface InputProps {
     size: InputSizes;
     disabled?: boolean;
+}
+
+interface RadioProps extends React.InputHTMLAttributes<T> {
+    suffix?: string | JSX.Element;
+    children: string[];
+}
+
+interface SelectProps extends React.SelectHTMLAttributes<T> {
+    value?: string;
+    children: string[];
+}
+
+interface LoadingButtonProps extends React.ButtonHTMLAttributes<T> {
+    type: 'button';
+}
+
+interface LoadingSpanProps extends React.HTMLAttributes<T> {
+    type: 'span';
+}
+
+interface JumbotronProps {
+    title: string | JSX.Element;
+    subtitle?: string | JSX.Element;
+    btn?: JumbotronBtn[];
+}
+
+interface ListProps extends React.HTMLAttributes<T> {
+    type: ListTypes[] | ListTypes[][];
+    children: string[];
+}
+
+interface ProgressProps extends React.ProgressHTMLAttributes<T> {
+    value: string | number;
+    max: string | number;
+}
+
+interface TooltipProps extends React.ButtonHTMLAttributes<T> {
+    btn?: JSX.Element;
+    type: TooltipTypes;
+    text: string;
 }
 
 const WuX: {
@@ -197,7 +251,27 @@ const WuX: {
      * @param {BreadcrumbProps} props an object with `item` as property
      */
     Breadcrumb: (props: BreadcrumbProps) => JSX.Element;
-    /**Card element */
+    /**Card element
+     *   
+     * The parameter `props` should be an object with `header` , `body` and `footer` as properties  
+     * `header` and `footer` is a JSX element
+     * `body` is a string or a JSX element
+     *   
+     * This is an example of a Card element :
+     * ```js
+     * 
+     * <WuX.Card
+     *     header={<img src="https://image.moeblog.gq/i/2022/07/16/nsdzkk.svg" alt='card img' />}
+     *     body='Hello'
+     *     footer={<>
+     *         <WuX.Button type={['primary', 'text']}>Test</WuX.Button>
+     *         <WuX.Button type={['secondary', 'text']}>Test</WuX.Button>
+     *     </>}
+     * />
+     * ```
+     * 
+     * @param {CardProps} props an object with `header` , `body` and `footer` as properties
+      */
     Card: (props: CardProps) => JSX.Element;
     /**Dialog element */
     Dialog: (props: DialogProps) => JSX.Element;
@@ -205,6 +279,28 @@ const WuX: {
     Dropdown: (props: DropdownProps) => JSX.Element;
     /**Input element */
     Input: (props: InputProps) => JSX.Element;
+    /**Textarea element */
+    Textarea: (props: React.TextareaHTMLAttributes<T>) => JSX.Element;
+    /**Check element */
+    Check: (props: React.InputHTMLAttributes<T>) => JSX.Element;
+    /**Radio element */
+    Radio: (props: RadioProps) => JSX.Element;
+    /**Range element */
+    Range: (props: React.InputHTMLAttributes<T>) => JSX.Element;
+    /**Select element */
+    Select: (props: SelectProps) => JSX.Element;
+    /**Upload element */
+    Upload: (props: React.InputHTMLAttributes<T>) => JSX.Element;
+    /**Loading element */
+    Loading: (props: LoadingButtonProps | LoadingSpanProps) => JSX.Element;
+    /**Jumbotron element */
+    Jumbotron: (props: JumbotronProps) => JSX.Element;
+    /**List element */
+    List: (props: ListProps) => JSX.Element;
+    /**Progress element */
+    Progress: (props: ProgressProps) => JSX.Element;
+    /**Tooltip element */
+    Tooltip: (props: TooltipProps) => JSX.Element;
 }
 
 export default WuX;
