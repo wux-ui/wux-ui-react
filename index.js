@@ -144,13 +144,14 @@ const WuX = {
         </label>
     },
     Radio: props => {
-        const { Suffix = <br />, children, ...otherProps } = props;
+        const { suffix = <br />, children, ...otherProps } = props;
+        var Suffix = suffix.type;
         var radios = children.map((v, i) => [
             <label key={`label-${i}`}>
                 <input className="wux-form-radios" type="radio" name="contact" {...otherProps} />
                 {v}
             </label>,
-            (i !== children.length - 1) && <Suffix.type key={`text-${i}`} {...Suffix.props} />
+            (i !== children.length - 1) && <Suffix key={`text-${i}`} {...suffix.props} />
         ]);
         return <form>{radios}</form>
     },
