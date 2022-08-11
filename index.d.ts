@@ -29,7 +29,8 @@ type ButtonTypes =
     'default' |
     'solid' |
     'round' |
-    'block';
+    'block' |
+    'active';
 
 type RowSizes =
     'xs' |
@@ -68,6 +69,12 @@ type TooltipTypes =
     'bottom' |
     'right' |
     'left';
+
+type TagTypes =
+    'warning' |
+    'error' |
+    'close';
+
 
 type HeaderOption = [
     string,
@@ -166,6 +173,14 @@ interface TooltipProps extends React.ButtonHTMLAttributes<T> {
     btn?: JSX.Element;
     type: TooltipTypes;
     text: string;
+}
+
+interface TableProps extends React.TableHTMLAttributes<T> {
+    children: object;
+}
+
+interface TagProps extends React.HTMLAttributes<T> {
+    type: TagTypes | TagTypes[];
 }
 
 const WuX: {
@@ -301,6 +316,10 @@ const WuX: {
     Progress: (props: ProgressProps) => JSX.Element;
     /**Tooltip element */
     Tooltip: (props: TooltipProps) => JSX.Element;
+    /**Table element */
+    Table: (props: TableProps) => JSX.Element;
+    /**Tag element */
+    Tag: (props: TagProps) => JSX.Element;
 }
 
 export default WuX;

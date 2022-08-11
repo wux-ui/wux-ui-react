@@ -1,14 +1,14 @@
 import React from "react";
 import "./import.css";
 
-function getClass(defaultValue, type) {
+function getClass(defaultValue, type, noDefault = false) {
     if (type) {
         var typeType = type.constructor.toString().split(' ')[1].split('(')[0];
         switch (typeType) {
             case 'String':
-                return `${defaultValue} ${defaultValue}-${type}`;
+                return `${noDefault ? '' : defaultValue + ' '}${defaultValue}-${type}`;
             case 'Array':
-                var className = defaultValue;
+                var className = noDefault ? '' : defaultValue;
                 type.forEach(v => className += ` ${defaultValue}-${v}`);
                 return className;
             default:
@@ -56,6 +56,8 @@ const WuX = {
     Button: props => {
         const { type, children, ...otherProps } = props;
         return <button className={getClass('wux-btn', type)}  {...otherProps}>{children}</button>
+    },
+    ButtonGroup: props => {
     },
     Breadcrumb: props => {
         var type = props.item.constructor.toString().split(' ')[1].split('(')[0];
@@ -205,9 +207,33 @@ const WuX = {
         const { btn = (<WuX.Button />), type, text, children, ...otherProps } = props;
         return <button className={`${getClass('wux-btn', btn.props.type)} wux-tooltip`} {...otherProps}>
             {children}
-            <span class={`wux-tooltip-item wux-tooltip-item-${type}`}>{text}</span>
+            <span className={`wux-tooltip-item wux-tooltip-item-${type}`}>{text}</span>
         </button>
-    }
+    },
+    Table: props => {
+        const { children, ...otherProps } = props;
+        var head = [];
+        for (const key in children) {
+            head.push(key);
+        }
+        var body = [];
+        head = head.map((v, i) => {
+            if (i === 0) children[v].forEach((value, index) => {
+                body[index] = [];
+                body[index][i] = <th key={`th-${index}-${i}`}>{value}</th>;
+            })
+            else children[v].forEach((value, index) => body[index][i] = <td key={`td-${index}-${i}`}>{value}</td>)
+            return <th key={`head-${i}`}>{v}</th>;
+        })
+        return <table className="wux-table wux-table-fluid" {...otherProps}>
+            <thead><tr>{head}</tr></thead>
+            <tbody>{body.map((v, i) => <tr key={`body-${i}`}>{v}</tr>)}</tbody>
+        </table>
+    },
+    Tag: props => {
+        const { type, children, ...otherProps } = props;
+        return <span className={getClass('wux-tag', type, (type && type.includes('close')))} {...otherProps}>{children}</span>
+    },
 }
 
 export default WuX;
