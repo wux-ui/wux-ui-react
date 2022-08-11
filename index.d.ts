@@ -32,6 +32,13 @@ type ButtonTypes =
     'block' |
     'active';
 
+type ButtonGroupTypes =
+    'xs' |
+    'sm' |
+    'md' |
+    'lg' |
+    'xl';
+
 type RowSizes =
     'xs' |
     'sm' |
@@ -101,6 +108,10 @@ interface AlertProps {
 
 interface ButtonProps extends React.ButtonHTMLAttributes<T> {
     type: ButtonTypes | ButtonTypes[];
+}
+
+interface ButtonGroupProps extends React.HTMLAttributes<T> {
+    type: ButtonGroupTypes | ButtonGroupTypes[];
 }
 
 interface RowProps {
@@ -183,6 +194,13 @@ interface TagProps extends React.HTMLAttributes<T> {
     type: TagTypes | TagTypes[];
 }
 
+interface BadgeProps extends React.HTMLAttributes<T> { }
+
+interface TabProps extends React.HTMLAttributes<T> {
+    name: string[];
+    children: string[] | JSX.Element[];
+}
+
 const WuX: {
     /**Header fixed margin */
     HeaderMargin: (props: any) => JSX.Element;
@@ -253,6 +271,8 @@ const WuX: {
      * @param {ButtonProps} props an object with `type` as property
      */
     Button: (props: ButtonProps) => JSX.Element;
+    /**ButtonGroup element */
+    ButtonGroup: (props: ButtonGroupProps) => JSX.Element;
     /**Breadcrumb element
      *   
      * The parameter `props` should be an object with `item` as property  
@@ -320,6 +340,12 @@ const WuX: {
     Table: (props: TableProps) => JSX.Element;
     /**Tag element */
     Tag: (props: TagProps) => JSX.Element;
+    /**Badge element */
+    Badge: (props: BadgeProps) => JSX.Element;
+    /**Search element */
+    Search: (props: React.InputHTMLAttributes<T>) => JSX.Element;
+    /**Tab element */
+    Tab: (props: TabProps) => JSX.Element;
 }
 
 export default WuX;

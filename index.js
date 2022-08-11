@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import "./import.css";
 
 function getClass(defaultValue, type, noDefault = false) {
@@ -58,6 +58,8 @@ const WuX = {
         return <button className={getClass('wux-btn', type)}  {...otherProps}>{children}</button>
     },
     ButtonGroup: props => {
+        const { type, children, ...otherProps } = props;
+        return <div className={getClass('wux-btn-group', type)} {...otherProps}>{children}</div>
     },
     Breadcrumb: props => {
         var type = props.item.constructor.toString().split(' ')[1].split('(')[0];
@@ -234,6 +236,36 @@ const WuX = {
         const { type, children, ...otherProps } = props;
         return <span className={getClass('wux-tag', type, (type && type.includes('close')))} {...otherProps}>{children}</span>
     },
+    Badge: props => {
+        const { children, ...otherProps } = props;
+        return <span className="wux-badge" {...otherProps}>{children}</span>
+    },
+    Search: props => <input className="wux-search" {...props} />,
+    Tab: props => {
+        const { name, children, ...otherProps } = props;
+        const [state, setState] = useState({ checked: "tab-0" });
+        var tabs = name.map((v, i) => <>
+            <input
+                className="wux-tab-item"
+                type="radio"
+                name="tab-ex"
+                id={`tab-${i}`}
+                checked={`tab-${i}` === state.checked}
+                key={`tabs-input-${i}`}
+                onChange={(e) => { setState({ checked: e.target.id }) }}
+            />
+            <label
+                className="wux-tab-item"
+                htmlFor={`tab-${i}`}
+                key={`tabs-label-${i}`}
+            >{v}</label>
+            <div
+                className="wux-tab-content"
+                key={`tabs-div-${i}`}
+            >{children[i]}</div>
+        </>);
+        return <div className="wux-tab" {...otherProps}>{tabs}</div>
+    }
 }
 
 export default WuX;
