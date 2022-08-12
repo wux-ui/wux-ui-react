@@ -98,8 +98,9 @@ type JumbotronBtn = [
 interface HeaderProps {
     /**a string as the title */
     title: string;
+    small?: string | JSX.Element;
     /**an array and links each item of the array to the second item displayed on the right with the first item as the title */
-    option?: HeaderOption[];
+    option: HeaderOption[];
 }
 
 interface AlertProps {

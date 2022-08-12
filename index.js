@@ -31,6 +31,7 @@ const WuX = {
         );
         return <nav className="wux-header wux-header-fixed">
             <span className="wux-header-title">{props.title}</span>
+            <button className="wux-header-small-option-group">{props.small}</button>
             <span className="wux-header-option-group">{optionGroup}</span>
         </nav>
     },
@@ -244,7 +245,7 @@ const WuX = {
     Tab: props => {
         const { name, children, ...otherProps } = props;
         const [state, setState] = useState({ checked: "tab-0" });
-        var tabs = name.map((v, i) => <>
+        var tabs = name.map((v, i) => [
             <input
                 className="wux-tab-item"
                 type="radio"
@@ -253,17 +254,17 @@ const WuX = {
                 checked={`tab-${i}` === state.checked}
                 key={`tabs-input-${i}`}
                 onChange={(e) => { setState({ checked: e.target.id }) }}
-            />
+            />,
             <label
                 className="wux-tab-item"
                 htmlFor={`tab-${i}`}
                 key={`tabs-label-${i}`}
-            >{v}</label>
+            >{v}</label>,
             <div
                 className="wux-tab-content"
                 key={`tabs-div-${i}`}
-            >{children[i]}</div>
-        </>);
+            >{children[i]}</div>,
+        ]);
         return <div className="wux-tab" {...otherProps}>{tabs}</div>
     }
 }
