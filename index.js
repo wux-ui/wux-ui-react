@@ -81,24 +81,25 @@ const WuX = {
             <div className="wux-card-footer">{props.footer}</div>
         </div>,
     Dialog: props => {
-        const { id, header, body, cancel, footer, children, ...otherProps } = props;
+        const { id, header, body, cancel, footer, btn = <WuX.Button />, children, ...otherProps } = props;
         var cancelBtn = cancel;
         var Cancel = cancel.type;
-        var FooterBtn = footer.props.children;
-        var type = FooterBtn.constructor.toString().split(' ')[1].split('(')[0];
+        var footerBtn = footer.props.children;
+        var Btn = btn.type;
+        var type = footerBtn.constructor.toString().split(' ')[1].split('(')[0];
         var footerElement;
         switch (type) {
             case 'String':
                 footerElement = footer;
                 break;
             case 'Object':
-                footerElement = FooterBtn.map(V => <V.type type="submit" {...V.props} />);
+                footerElement = footerBtn.map(V => <V.type type="submit" {...V.props} />);
                 break;
             default:
                 break;
         }
         return <>
-            <button className="wux-btn" onClick={() => { document.getElementById(id).showModal() }}>{children}</button>
+            <Btn onClick={() => { document.getElementById(id).showModal() }} {...btn.props} >{children}</Btn>
             <dialog className="wux-dialog" id={id} {...otherProps}>
                 <div className="wux-dialog-header">
                     <h1 className="wux-dialog-header-title">{header}</h1>
@@ -116,9 +117,10 @@ const WuX = {
         </>
     },
     Dropdown: props => {
-        var items = props.menu.map((v, i) => <li className="wux-dropdown-item" key={i}>{v}</li>);
-        return <div className="wux-dropdown">
-            <button className="wux-btn wux-dropdown-trigger">{props.children}</button>
+        const { menu, btn = <WuX.Button />, children, ...otherProps } = props;
+        var items = menu.map((v, i) => <li className="wux-dropdown-item" key={i}>{v}</li>);
+        return <div className="wux-dropdown" {...otherProps}>
+            <button className={`${getClass('wux-btn', btn.props.type)} wux-dropdown-trigger`} {...btn.props}>{children}</button>
             <ul className="wux-dropdown-menu">{items}</ul>
         </div>
     },
