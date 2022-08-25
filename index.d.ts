@@ -8,7 +8,8 @@ type AlertTypes =
     'warning' |
     'error' |
     'light' |
-    'icon';
+    'icon' |
+    'option-group';
 
 type ButtonTypes =
     'primary' |
@@ -94,6 +95,10 @@ type JumbotronBtn = [
     JSX.Element,
     React.AllHTMLAttributes<T> | undefined,
 ]
+type BlankslateBtn = [
+    JSX.Element,
+    React.AllHTMLAttributes<T> | undefined,
+]
 
 interface HeaderProps {
     /**a string as the title */
@@ -130,7 +135,7 @@ interface BreadcrumbProps {
     item: string | string[];
 }
 
-interface CardProps {
+interface CardProps extends React.HTMLAttributes<T> {
     /**a JSX element */
     header: JSX.Element;
     /**a string or a JSX element */
@@ -197,6 +202,10 @@ interface JumbotronProps {
     btn?: JumbotronBtn[];
 }
 
+interface JumbotronTitleBlodProps extends React.HTMLAttributes<T> {
+    type: JSX.Element;
+}
+
 interface ListProps extends React.HTMLAttributes<T> {
     /**an array with ListTypes or an array composed of ListTypes */
     type: ListTypes[] | ListTypes[][];
@@ -233,6 +242,18 @@ interface TabProps extends React.HTMLAttributes<T> {
     name: string[];
     /**an array of strings or an array of JSX element, displayed as the page under the corresponding tab */
     children: string[] | JSX.Element[];
+}
+
+interface BlankslateProps extends React.HTMLAttributes<T> {
+    icon: JSX.Element;
+    title: string | JSX.Element;
+    subtitle: string | JSX.Element;
+    btn?: BlankslateBtn[];
+}
+
+interface CollapseProps extends React.HTMLAttributes<T> {
+    summary: string;
+    collapse: JSX.Element | string;
 }
 
 const WuX: {
@@ -486,6 +507,8 @@ const WuX: {
      * @param {JumbotronProps} props an object with `title` as property
      */
     Jumbotron: (props: JumbotronProps) => JSX.Element;
+    /**JumbotronTitleBlod element */
+    JumbotronTitleBlod: (props: JumbotronTitleBlodProps) => JSX.Element;
     /**List element
      *   
      * The parameter `props` should be an object with `type` and `children` as properties  
@@ -577,6 +600,12 @@ const WuX: {
      * @param {TabProps} props an object with `name` and `children` as properties
      */
     Tab: (props: TabProps) => JSX.Element;
+    /**Blankslate element */
+    Blankslate: (props: BlankslateProps) => JSX.Element;
+    /**Typo element */
+    Typo: (props: React.HTMLAttributes<T>) => JSX.Element;
+    /**Collapse element */
+    Collapse: (props: CollapseProps) => JSX.Element;
 }
 
 export default WuX;

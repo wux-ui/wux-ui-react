@@ -51,17 +51,11 @@ const WuX = {
     },
     Col: props => <div className="wux-col">{props.children}</div>,
     Alert: props => {
-        if (props.type === 'icon') return <span className="wux-alert-icon">{props.children}</span>
+        if (['icon', 'option-group'].includes(props.type)) return <span className={`wux-alert-${props.type}`}>{props.children}</span>
         else return <div className={`wux-alert wux-alert-${props.type}`}>{props.children}</div>
     },
-    Button: props => {
-        const { type, children, ...otherProps } = props;
-        return <button className={getClass('wux-btn', type)}  {...otherProps}>{children}</button>
-    },
-    ButtonGroup: props => {
-        const { type, children, ...otherProps } = props;
-        return <div className={getClass('wux-btn-group', type)} {...otherProps}>{children}</div>
-    },
+    Button: ({ type, ...otherProps }) => <button className={getClass('wux-btn', type)}  {...otherProps} />,
+    ButtonGroup: ({ type, ...otherProps }) => <div className={getClass('wux-btn-group', type)} {...otherProps} />,
     Breadcrumb: props => {
         var type = props.item.constructor.toString().split(' ')[1].split('(')[0];
         switch (type) {
@@ -74,14 +68,13 @@ const WuX = {
                 break;
         }
     },
-    Card: props =>
-        <div className="wux-card wux-card-hover">
-            <div className="wux-card-header">{props.header}</div>
-            <div className="wux-card-body">{props.body}</div>
-            <div className="wux-card-footer">{props.footer}</div>
+    Card: ({ header, body, footer, ...otherProps }) =>
+        <div className="wux-card wux-card-hover" {...otherProps}>
+            <div className="wux-card-header">{header}</div>
+            <div className="wux-card-body">{body}</div>
+            <div className="wux-card-footer">{footer}</div>
         </div>,
-    Dialog: props => {
-        const { id, header, body, cancel, footer, btn = <WuX.Button />, children, ...otherProps } = props;
+    Dialog: ({ id, header, body, cancel, footer, btn = <WuX.Button />, children, ...otherProps }) => {
         var cancelBtn = cancel;
         var Cancel = cancel.type;
         var footerBtn = footer.props.children;
@@ -116,8 +109,7 @@ const WuX = {
             </dialog>
         </>
     },
-    Dropdown: props => {
-        const { menu, btn = <WuX.Button />, children, ...otherProps } = props;
+    Dropdown: ({ menu, btn = <WuX.Button />, children, ...otherProps }) => {
         var items = menu.map((v, i) => <li className="wux-dropdown-item" key={i}>{v}</li>);
         return <div className="wux-dropdown" {...otherProps}>
             <button className={`${getClass('wux-btn', btn.props.type)} wux-dropdown-trigger`} {...btn.props}>{children}</button>
@@ -199,6 +191,11 @@ const WuX = {
             <div className="wux-jumbotron-btn-group">{linkBtn}</div>
         </div>
     },
+    JumbotronTitleBlod: props => {
+        const { type, ...otherProps } = props;
+        var Type = type.type;
+        return <Type className='wux-jumbotron-title-bold' {...otherProps} />
+    },
     List: props => {
         const { type, children, ...otherProps } = props;
         var group = children.map((v, i) => <li className={getClass(`wux-list-item`, type[i])} key={i}>{v}</li>);
@@ -268,7 +265,25 @@ const WuX = {
             >{children[i]}</div>,
         ]);
         return <div className="wux-tab" {...otherProps}>{tabs}</div>
-    }
+    },
+    Blankslate: props => {
+        const { icon, title, subtitle, btn, ...otherProps } = props;
+        var btnGroup = btn.map((v, i) => {
+            const { type, children } = v[0].props;
+            return <button key={i} className={getClass('wux-btn', type)}  {...v[1]}>{children}</button>;
+        })
+        return <div className="wux-blankslate" {...otherProps}>{icon}
+            <h1 className="wux-blankslate-title">{title}</h1>
+            <p className="wux-blankslate-subtitle">{subtitle}</p>
+            <div className="wux-blankslate-button-group">{btnGroup}</div>
+        </div>
+    },
+    Typo: ({ children, ...otherProps }) => <div className="wux-typo" {...otherProps}>{children}</div>,
+    Collapse: ({ summary, collapse, ...otherProps }) =>
+        <details className="wux-collapse" {...otherProps}>
+            <summary>{summary}</summary>
+            <div>{collapse}</div>
+        </details>,
 }
 
 export default WuX;
