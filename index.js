@@ -116,21 +116,15 @@ const WuX = {
             <ul className="wux-dropdown-menu">{items}</ul>
         </div>
     },
-    Input: props => {
-        const { size, children, ...otherProps } = props;
-        return <input
+    Input: ({ size, children, ...otherProps }) =>
+        <input
             className={`wux-form-input wux-form-input-${size}`}
             placeholder={children}
             type="url"
             {...otherProps}
-        />
-    },
-    Textarea: props => {
-        const { children, ...otherProps } = props;
-        return <textarea className="wux-form-input wux-form-input-md" placeholder={children} {...otherProps} />
-    },
-    Check: props => {
-        const { checked = false, children, ...otherProps } = props;
+        />,
+    Textarea: ({ children, ...otherProps }) => <textarea className="wux-form-input wux-form-input-md" placeholder={children} {...otherProps} />,
+    Check: ({ checked = false, children, ...otherProps }) => {
         const [state, setState] = React.useState({ checked: checked });
         return <label>
             <input
@@ -142,8 +136,7 @@ const WuX = {
             {children}
         </label>
     },
-    Radio: props => {
-        const { suffix = <br />, children, ...otherProps } = props;
+    Radio: ({ suffix = <br />, children, ...otherProps }) => {
         var Suffix = suffix.type;
         var radios = children.map((v, i) => [
             <label key={`label-${i}`}>
@@ -155,8 +148,7 @@ const WuX = {
         return <form>{radios}</form>
     },
     Range: props => <input className="wux-form-range" type="range" {...props} />,
-    Select: props => {
-        var { value, children, ...otherProps } = props;
+    Select: ({ value, children, ...otherProps }) => {
         value = value || children[0];
         const [state, setState] = React.useState({ value: value });
         var options = children.map((v, i) => <option key={i}>{v}</option>)
@@ -168,8 +160,7 @@ const WuX = {
         >{options}</select>
     },
     Upload: props => <input className="wux-form-upload" type="file" {...props} />,
-    Loading: props => {
-        const { type, ...otherProps } = props
+    Loading: ({ type, ...otherProps }) => {
         switch (type) {
             case "button":
                 return <button className="wux-btn wux-loading" {...otherProps} />
@@ -179,8 +170,7 @@ const WuX = {
                 break;
         }
     },
-    Jumbotron: props => {
-        const { title, subtitle, btn, ...otherProps } = props;
+    Jumbotron: ({ title, subtitle, btn, ...otherProps }) => {
         var linkBtn = btn.map((v, i) => {
             const { type, children } = v[1].props;
             return <a href={v[0]} key={i} className={getClass('wux-btn', type)}  {...v[2]}>{children}</a>;
@@ -191,29 +181,21 @@ const WuX = {
             <div className="wux-jumbotron-btn-group">{linkBtn}</div>
         </div>
     },
-    JumbotronTitleBlod: props => {
-        const { type, ...otherProps } = props;
+    JumbotronTitleBlod: ({ type, ...otherProps }) => {
         var Type = type.type;
         return <Type className='wux-jumbotron-title-bold' {...otherProps} />
     },
-    List: props => {
-        const { type, children, ...otherProps } = props;
+    List: ({ type, children, ...otherProps }) => {
         var group = children.map((v, i) => <li className={getClass(`wux-list-item`, type[i])} key={i}>{v}</li>);
         return <ul className="wux-list-group" {...otherProps}>{group}</ul>
     },
-    Progress: props => {
-        const { value, max, ...otherProps } = props;
-        return <progress className="wux-progress" value={String(value)} max={String(max)}  {...otherProps} />
-    },
-    Tooltip: props => {
-        const { btn = (<WuX.Button />), type, text, children, ...otherProps } = props;
-        return <button className={`${getClass('wux-btn', btn.props.type)} wux-tooltip`} {...otherProps}>
+    Progress: ({ value, max, ...otherProps }) => <progress className="wux-progress" value={String(value)} max={String(max)}  {...otherProps} />,
+    Tooltip: ({ btn = (<WuX.Button />), type, text, children, ...otherProps }) =>
+        <button className={`${getClass('wux-btn', btn.props.type)} wux-tooltip`} {...otherProps}>
             {children}
             <span className={`wux-tooltip-item wux-tooltip-item-${type}`}>{text}</span>
-        </button>
-    },
-    Table: props => {
-        const { children, ...otherProps } = props;
+        </button>,
+    Table: ({ children, ...otherProps }) => {
         var head = [];
         for (const key in children) {
             head.push(key);
@@ -232,17 +214,10 @@ const WuX = {
             <tbody>{body.map((v, i) => <tr key={`body-${i}`}>{v}</tr>)}</tbody>
         </table>
     },
-    Tag: props => {
-        const { type, children, ...otherProps } = props;
-        return <span className={getClass('wux-tag', type, (type && type.includes('close')))} {...otherProps}>{children}</span>
-    },
-    Badge: props => {
-        const { children, ...otherProps } = props;
-        return <span className="wux-badge" {...otherProps}>{children}</span>
-    },
+    Tag: ({ type, children, ...otherProps }) => <span className={getClass('wux-tag', type, (type && type.includes('close')))} {...otherProps}>{children}</span>,
+    Badge: ({ children, ...otherProps }) => <span className="wux-badge" {...otherProps}>{children}</span>,
     Search: props => <input className="wux-search" {...props} />,
-    Tab: props => {
-        const { name, children, ...otherProps } = props;
+    Tab: ({ name, children, ...otherProps }) => {
         const [state, setState] = useState({ checked: "tab-0" });
         var tabs = name.map((v, i) => [
             <input
@@ -266,8 +241,7 @@ const WuX = {
         ]);
         return <div className="wux-tab" {...otherProps}>{tabs}</div>
     },
-    Blankslate: props => {
-        const { icon, title, subtitle, btn, ...otherProps } = props;
+    Blankslate: ({ icon, title, subtitle, btn, ...otherProps }) => {
         var btnGroup = btn.map((v, i) => {
             const { type, children } = v[0].props;
             return <button key={i} className={getClass('wux-btn', type)}  {...v[1]}>{children}</button>;
