@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import "./import.css";
+import React, { useState } from 'react';
+import './import.css';
 
 function getClass(defaultValue, type, noDefault = false) {
     if (type) {
