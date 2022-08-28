@@ -83,6 +83,14 @@ type TagTypes =
     'error' |
     'close';
 
+type CardTypes =
+    'hover' |
+    'flat';
+
+type JumbotronAlign =
+    'left' |
+    'center' |
+    'right';
 
 type HeaderOption = [
     string,
@@ -95,6 +103,7 @@ type JumbotronBtn = [
     JSX.Element,
     React.AllHTMLAttributes<T> | undefined,
 ]
+
 type BlankslateBtn = [
     JSX.Element,
     React.AllHTMLAttributes<T> | undefined,
@@ -136,6 +145,7 @@ interface BreadcrumbProps {
 }
 
 interface CardProps extends React.HTMLAttributes<T> {
+    type: CardTypes;
     /**a JSX element */
     header: JSX.Element;
     /**a string or a JSX element */
@@ -194,12 +204,15 @@ interface LoadingSpanProps extends React.HTMLAttributes<T> {
 }
 
 interface JumbotronProps {
+    before: JSX.Element;
     /**a string or a JSX element */
     title: string | JSX.Element;
     /**a JSX element to specify a subtitle, it is a string or a JSX element */
     subtitle?: string | JSX.Element;
     /**a JSX element to specify the button style of the Jumbotron element */
     btn?: JumbotronBtn[];
+    align: JumbotronAlign;
+    after: JSX.Element;
 }
 
 interface JumbotronTitleBlodProps extends React.HTMLAttributes<T> {

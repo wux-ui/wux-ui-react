@@ -68,8 +68,8 @@ const WuX = {
                 break;
         }
     },
-    Card: ({ header, body, footer, ...otherProps }) =>
-        <div className="wux-card wux-card-hover" {...otherProps}>
+    Card: ({ type = 'hover', header, body, footer, ...otherProps }) =>
+        <div className={getClass('wux-card', type)} {...otherProps}>
             <div className="wux-card-header">{header}</div>
             <div className="wux-card-body">{body}</div>
             <div className="wux-card-footer">{footer}</div>
@@ -170,15 +170,17 @@ const WuX = {
                 break;
         }
     },
-    Jumbotron: ({ title, subtitle, btn, ...otherProps }) => {
+    Jumbotron: ({ before, title, subtitle, btn, after, ...otherProps }) => {
         var linkBtn = btn.map((v, i) => {
             const { type, children } = v[1].props;
             return <a href={v[0]} key={i} className={getClass('wux-btn', type)}  {...v[2]}>{children}</a>;
         })
         return <div className="wux-jumbotron" {...otherProps}>
+            {before}
             <h1 className="wux-jumbotron-title">{title}</h1>
             <p className="wux-jumbotron-subtitle">{subtitle}</p>
             <div className="wux-jumbotron-btn-group">{linkBtn}</div>
+            {after}
         </div>
     },
     JumbotronTitleBlod: ({ type, ...otherProps }) => {
