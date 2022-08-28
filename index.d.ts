@@ -145,6 +145,7 @@ interface BreadcrumbProps {
 }
 
 interface CardProps extends React.HTMLAttributes<T> {
+    /**a string */
     type: CardTypes;
     /**a JSX element */
     header: JSX.Element;
@@ -204,14 +205,17 @@ interface LoadingSpanProps extends React.HTMLAttributes<T> {
 }
 
 interface JumbotronProps {
+    /**a JSX element */
     before: JSX.Element;
     /**a string or a JSX element */
     title: string | JSX.Element;
-    /**a JSX element to specify a subtitle, it is a string or a JSX element */
+    /**a string or a JSX element to specify a subtitle */
     subtitle?: string | JSX.Element;
-    /**a JSX element to specify the button style of the Jumbotron element */
+    /**JSX elements to specify the button style of the Jumbotron element */
     btn?: JumbotronBtn[];
+    /**a string */
     align: JumbotronAlign;
+    /**a JSX element */
     after: JSX.Element;
 }
 
@@ -258,14 +262,20 @@ interface TabProps extends React.HTMLAttributes<T> {
 }
 
 interface BlankslateProps extends React.HTMLAttributes<T> {
-    icon: JSX.Element;
+    /**a JSX element to specify the icon the Blankslate element */
+    icon?: JSX.Element;
+    /**a string or a JSX element */
     title: string | JSX.Element;
-    subtitle: string | JSX.Element;
+    /**a string or a JSX element to specify a subtitle */
+    subtitle?: string | JSX.Element;
+    /**JSX elements to specify the button style of the Blankslate element  */
     btn?: BlankslateBtn[];
 }
 
 interface CollapseProps extends React.HTMLAttributes<T> {
+    /**a string, which is displayed as the summary of the Collapse element */
     summary: string;
+    /**a string or a JSX element, displayed as the collapse of the Collapse element */
     collapse: JSX.Element | string;
 }
 
@@ -375,6 +385,7 @@ const WuX: {
     /**Card element
      *   
      * The parameter `props` should be an object with `header`, `body` and `footer` as properties  
+     * `type` is a string
      * `header` and `footer` is a JSX element  
      * `body` is a string or a JSX element  
      *   
@@ -499,6 +510,7 @@ const WuX: {
      * `title` is a string or a JSX element  
      * Use `subtitle` to specify a subtitle, it is a string or a JSX element  
      * You can use `btn` to specify the button style of the Jumbotron element  
+     * You can use `before` or `after` to specify the element that before or after the Jumbotron element  
      *   
      * This is an example of a Jumbotron element :
      * ```js
@@ -613,11 +625,44 @@ const WuX: {
      * @param {TabProps} props an object with `name` and `children` as properties
      */
     Tab: (props: TabProps) => JSX.Element;
-    /**Blankslate element */
+    /**Blankslate element
+     *   
+     * The parameter `props` should be an object with `title` as property  
+     * `title` is a string or a JSX element  
+     * Use `subtitle` to specify a subtitle, it is a string or a JSX element  
+     * You can use `icon` to specify the icon the Blankslate element, it is a JSX element  
+     * You can use `btn` to specify the button style of the Blankslate element  
+     *   
+     * This is an example of a Blankslate element :
+     * ```js
+     * <WuX.Blankslate
+     *     icon={<img src="https://react-dev.wux-ui.tk/icon.svg" className="wux-blankslate-icon" alt='icon' />}
+     *     title='This is a Blankslate!'
+     *     subtitle='Yeah, Blankslate!'
+     *     btn={[
+     *         [<WuX.Button>Great!</WuX.Button>],
+     *         [<WuX.Button type='text'>Uhh...</WuX.Button>]
+     *     ]}
+     * />
+     * ```
+     * 
+     * @param {BlankslateProps} props an object with `title` as property
+     */
     Blankslate: (props: BlankslateProps) => JSX.Element;
     /**Typo element */
     Typo: (props: React.HTMLAttributes<T>) => JSX.Element;
-    /**Collapse element */
+    /**Collapse element
+     *    
+     * The parameter `props` should be an object with `summary` and `collapse` as properties  
+     * `summary` is a string, which is displayed as the summary of the Collapse element  
+     * `collapse` is a string or a JSX element, displayed as the collapse of the Collapse element
+     *   
+     * This is an example of a Collapse element :
+     * ```js
+     * ```
+     * 
+     * @param {CollapseProps} props an object with `summary` and `collapse` as properties
+     */
     Collapse: (props: CollapseProps) => JSX.Element;
 }
 

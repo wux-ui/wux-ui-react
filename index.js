@@ -29,7 +29,7 @@ const WuX = {
                 {v[0]}
             </a>
         );
-        return <nav className="wux-header wux-header-fixed">
+        return <nav className="wux-header">
             <span className="wux-header-title">{props.title}</span>
             <button className="wux-header-small-option-group">{props.small}</button>
             <span className="wux-header-option-group">{optionGroup}</span>
