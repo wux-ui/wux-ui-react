@@ -1,6 +1,6 @@
 <div align="center">
 
-![WuX-UI for React.js](https://react.wux-ui.tk/icon.svg "WuX-UI for React.js")
+<img src="https://react.wux-ui.tk/icon.svg" width="150px" height="150px" alt="icon" title="WuX-UI for React.js" />
 
 ### WuX-UI for React.js
 </div>
