@@ -20,8 +20,8 @@ function getClass(defaultValue, type, noDefault = false) {
 
 const WuX = {
     HeaderMargin: props => <div className="wux-header-fixed-margin">{props.children}</div>,
-    Header: props => {
-        var optionGroup = props.option.map((v, i) =>
+    Header: ({ type, option, title, small, ...otherProps }) => {
+        var optionGroup = option.map((v, i) =>
             <a
                 className={`wux-header-option${v[2] ? ' wux-header-option-bold' : ''}`}
                 href={v[1]}
@@ -29,9 +29,9 @@ const WuX = {
                 {v[0]}
             </a>
         );
-        return <nav className="wux-header">
-            <span className="wux-header-title">{props.title}</span>
-            <button className="wux-header-small-option-group">{props.small}</button>
+        return <nav className={type ? getClass('wux-header', type) : 'wux-header'} {...otherProps}>
+            <span className="wux-header-title">{title}</span>
+            <button className="wux-header-small-option-group">{small}</button>
             <span className="wux-header-option-group">{optionGroup}</span>
         </nav>
     },

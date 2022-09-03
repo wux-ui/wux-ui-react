@@ -1,5 +1,8 @@
 import React from 'react';
 
+type HeaderTypes =
+    'fixed';
+
 type AlertTypes =
     'primary' |
     'secondary' |
@@ -109,7 +112,8 @@ type BlankslateBtn = [
     React.AllHTMLAttributes<T> | undefined,
 ]
 
-interface HeaderProps {
+interface HeaderProps extends React.HTMLAttributes<T> {
+    type?: HeaderTypes;
     /**a string as the title */
     title: string;
     /**a button for displaying options on the mobile terminal */
