@@ -296,7 +296,7 @@ const WuX: {
      * This is an example of a Header element :
      * ```js
      * <WuX.Header
-     *     title='WuX-UI for React.js Debug Page'
+     *     title='WuX-UI-React Debug Page'
      *     small='Menu'
      *     option={[
      *         ['Github', 'https://github.com/wux-ui/wux-ui-react'],
