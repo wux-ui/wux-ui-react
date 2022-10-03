@@ -21,14 +21,21 @@ function getClass(defaultValue, type, noDefault = false) {
 const WuX = {
     HeaderMargin: props => <div className="wux-header-fixed-margin">{props.children}</div>,
     Header: ({ type, option, title, small, ...otherProps }) => {
-        var optionGroup = option.map((v, i) =>
-            <a
-                className={`wux-header-option${v[2] ? ' wux-header-option-bold' : ''}`}
-                href={v[1]}
-                key={i}>
-                {v[0]}
-            </a>
-        );
+        var optionGroup = option.map((v, i) => {
+            if (v.constructor.toString().split(' ')[1].split('(')[0] === 'Object') {
+                var Type = v.type;
+                return <Type key={i} {...v.props} />;
+            }
+            else {
+                const { title, link, bold } = v;
+                return <a
+                    className={`wux-header-option${bold ? ' wux-header-option-bold' : ''}`}
+                    href={link}
+                    key={i}>
+                    {title}
+                </a>;
+            }
+        });
         return <nav className={type ? getClass('wux-header', type) : 'wux-header'} {...otherProps}>
             <span className="wux-header-title">{title}</span>
             <button className="wux-header-small-option-group">{small}</button>

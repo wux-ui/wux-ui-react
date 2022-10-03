@@ -1,5 +1,7 @@
 import React from 'react';
 
+type T = any;
+
 type HeaderTypes =
     'fixed';
 
@@ -95,11 +97,11 @@ type JumbotronAlign =
     'center' |
     'right';
 
-type HeaderOption = [
-    string,
-    string,
-    boolean | undefined,
-]
+type HeaderOption = {
+    title: string;
+    link: string;
+    bold: boolean | undefined;
+}
 
 type JumbotronBtn = [
     string,
@@ -119,7 +121,7 @@ interface HeaderProps extends React.HTMLAttributes<T> {
     /**a button for displaying options on the mobile terminal */
     small?: string | JSX.Element;
     /**an array and links each item of the array to the second item displayed on the right with the first item as the title */
-    option: HeaderOption[];
+    option: (HeaderOption | JSX.Element)[];
 }
 
 interface AlertProps {
@@ -248,9 +250,7 @@ interface TooltipProps extends React.ButtonHTMLAttributes<T> {
     text: string;
 }
 
-interface TableProps extends React.TableHTMLAttributes<T> {
-    children: object;
-}
+interface TableProps extends React.TableHTMLAttributes<T> { }
 
 interface TagProps extends React.HTMLAttributes<T> {
     type: TagTypes | TagTypes[];
@@ -291,7 +291,7 @@ const WuX: {
      * The parameter `props` should be an object with `title`, `small` and `option` as properties  
      * `title` is a string as the title  
      * `small` is a button for displaying options on the mobile terminal  
-     * `option` is an array and links each item of the array to the second item displayed on the right with the first item as the title  
+     * `option` is an array with {@link HeaderOption}  
      *   
      * This is an example of a Header element :
      * ```js
@@ -299,9 +299,10 @@ const WuX: {
      *     title='WuX-UI-React Debug Page'
      *     small='Menu'
      *     option={[
-     *         ['Github', 'https://github.com/wux-ui/wux-ui-react'],
-     *         ['Offical Page', 'https://wux-ui.tk/', true]
-     *     ]}
+                { title: 'Github', link: 'https://github.com/wux-ui/wux-ui-react-docs' },
+                { title: 'Offical Page', link: 'https://react.wux-ui.tk/', bold: true },
+                <JsxElement />
+            ]}
      * />
      * ```
      * 
