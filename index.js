@@ -23,17 +23,19 @@ const WuX = {
     Header: ({ type, option, title, small, ...otherProps }) => {
         var optionGroup = option.map((v, i) => {
             if (v.constructor.toString().split(' ')[1].split('(')[0] === 'Object') {
-                var Type = v.type;
-                return <Type key={i} {...v.props} />;
-            }
-            else {
-                const { title, link, bold } = v;
-                return <a
-                    className={`wux-header-option${bold ? ' wux-header-option-bold' : ''}`}
-                    href={link}
-                    key={i}>
-                    {title}
-                </a>;
+                if (v.$$typeof === (<p />).$$typeof) {
+                    var Type = v.type;
+                    return <Type key={i} {...v.props} />;
+                }
+                else {
+                    const { title, link, bold } = v;
+                    return <a
+                        className={`wux-header-option${bold ? ' wux-header-option-bold' : ''}`}
+                        href={link}
+                        key={i}>
+                        {title}
+                    </a>;
+                }
             }
         });
         return <nav className={type ? getClass('wux-header', type) : 'wux-header'} {...otherProps}>
