@@ -21,7 +21,7 @@ function getClass(defaultValue, type, noDefault = false) {
 const WuX = {
     HeaderMargin: props => <div className="wux-header-fixed-margin">{props.children}</div>,
     Header: ({ type, option, title, small, ...otherProps }) => {
-        var optionGroup = option.map((v, i) => {
+        var optionGroup = option.forEach((v, i) => {
             if (v.constructor.toString().split(' ')[1].split('(')[0] === 'Object') {
                 if (v.$$typeof === (<p />).$$typeof) {
                     var Type = v.type;
@@ -63,7 +63,7 @@ const WuX = {
         if (['icon', 'option-group'].includes(props.type)) return <span className={`wux-alert-${props.type}`}>{props.children}</span>
         else return <div className={`wux-alert wux-alert-${props.type}`}>{props.children}</div>
     },
-    Button: ({ type, ...otherProps }) => <button className={getClass('wux-btn', type)}  {...otherProps} />,
+    Button: ({ WuXType, ...otherProps }) => <button className={getClass('wux-btn', WuXType)}  {...otherProps} />,
     ButtonGroup: ({ type, ...otherProps }) => <div className={getClass('wux-btn-group', type)} {...otherProps} />,
     Breadcrumb: props => {
         var type = props.item.constructor.toString().split(' ')[1].split('(')[0];
@@ -125,9 +125,9 @@ const WuX = {
             <ul className="wux-dropdown-menu">{items}</ul>
         </div>
     },
-    Input: ({ size, children, ...otherProps }) =>
+    Input: ({ WuXSize, children, ...otherProps }) =>
         <input
-            className={`wux-form-input wux-form-input-${size}`}
+            className={`wux-form-input wux-form-input-${WuXSize}`}
             placeholder={children}
             type="url"
             {...otherProps}
@@ -201,10 +201,10 @@ const WuX = {
         return <ul className="wux-list-group" {...otherProps}>{group}</ul>
     },
     Progress: ({ value, max, ...otherProps }) => <progress className="wux-progress" value={String(value)} max={String(max)}  {...otherProps} />,
-    Tooltip: ({ btn = (<WuX.Button />), type, text, children, ...otherProps }) =>
+    Tooltip: ({ btn = (<WuX.Button />), WuXType, text, children, ...otherProps }) =>
         <button className={`${getClass('wux-btn', btn.props.type)} wux-tooltip`} {...otherProps}>
             {children}
-            <span className={`wux-tooltip-item wux-tooltip-item-${type}`}>{text}</span>
+            <span className={`wux-tooltip-item wux-tooltip-item-${WuXType}`}>{text}</span>
         </button>,
     Table: ({ children, ...otherProps }) => {
         var head = [];
@@ -252,13 +252,13 @@ const WuX = {
         ]);
         return <div className="wux-tab" {...otherProps}>{tabs}</div>
     },
-    Blankslate: ({ icon, title, subtitle, btn, ...otherProps }) => {
+    Blankslate: ({ icon, WuXTitle, subtitle, btn, ...otherProps }) => {
         var btnGroup = btn.map((v, i) => {
             const { type, children } = v[0].props;
             return <button key={i} className={getClass('wux-btn', type)}  {...v[1]}>{children}</button>;
         })
         return <div className="wux-blankslate" {...otherProps}>{icon}
-            <h1 className="wux-blankslate-title">{title}</h1>
+            <h1 className="wux-blankslate-title">{WuXTitle}</h1>
             <p className="wux-blankslate-subtitle">{subtitle}</p>
             <div className="wux-blankslate-button-group">{btnGroup}</div>
         </div>
@@ -272,3 +272,5 @@ const WuX = {
 }
 
 export default WuX;
+
+export const supports = (component) => WuX[component] === undefined;

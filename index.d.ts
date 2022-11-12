@@ -131,7 +131,7 @@ interface AlertProps {
 
 interface ButtonProps extends React.ButtonHTMLAttributes<T> {
     /**a string or an array to specify the type of the Button element */
-    type: ButtonTypes | ButtonTypes[];
+    WuXType: ButtonTypes | ButtonTypes[];
 }
 
 interface ButtonGroupProps extends React.HTMLAttributes<T> {
@@ -185,7 +185,7 @@ interface DropdownProps {
 
 interface InputProps extends React.InputHTMLAttributes<T> {
     /**a string to specify the size of the Input element */
-    size: InputSizes;
+    WuXSize: InputSizes;
 }
 
 interface RadioProps extends React.InputHTMLAttributes<T> {
@@ -245,7 +245,7 @@ interface TooltipProps extends React.ButtonHTMLAttributes<T> {
     /**a JSX element to specify the button style of the Tooltip element */
     btn?: JSX.Element;
     /**a string of ListTypes */
-    type: TooltipTypes;
+    WuXType: TooltipTypes;
     /**a string */
     text: string;
 }
@@ -269,7 +269,7 @@ interface BlankslateProps extends React.HTMLAttributes<T> {
     /**a JSX element to specify the icon the Blankslate element */
     icon?: JSX.Element;
     /**a string or a JSX element */
-    title: string | JSX.Element;
+    WuXTitle: string | JSX.Element;
     /**a string or a JSX element to specify a subtitle */
     subtitle?: string | JSX.Element;
     /**JSX elements to specify the button style of the Blankslate element  */
@@ -283,7 +283,7 @@ interface CollapseProps extends React.HTMLAttributes<T> {
     collapse: JSX.Element | string;
 }
 
-const WuX: {
+declare const WuX: {
     /**Header fixed margin */
     HeaderMargin: (props: any) => JSX.Element;
     /**Header element  
@@ -672,3 +672,5 @@ const WuX: {
 }
 
 export default WuX;
+
+export const supports: (component: string) => boolean;
