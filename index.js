@@ -64,7 +64,10 @@ const WuX = {
         if (['icon', 'option-group'].includes(props.type)) return <span className={`wux-alert-${props.type}`}>{props.children}</span>
         else return <div className={`wux-alert wux-alert-${props.type}`}>{props.children}</div>
     },
-    Button: ({ WuXType, ...otherProps }) => <button className={getClass('wux-btn', WuXType)}  {...otherProps} />,
+    Button: ({ WuXType, JSXType = <button />, ...otherProps }) => {
+        const Type = JSXType.type;
+        return <Type className={getClass('wux-btn', WuXType)}  {...otherProps} />
+    },
     ButtonGroup: ({ type, ...otherProps }) => <div className={getClass('wux-btn-group', type)} {...otherProps} />,
     Breadcrumb: props => {
         let type = props.item.constructor.toString().split(' ')[1].split('(')[0];

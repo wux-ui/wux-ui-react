@@ -132,6 +132,7 @@ interface AlertProps {
 interface ButtonProps extends React.ButtonHTMLAttributes<T> {
     /**a string or an array to specify the type of the Button element */
     WuXType: ButtonTypes | ButtonTypes[];
+    JSXType: JSX.Element;
 }
 
 interface ButtonGroupProps extends React.HTMLAttributes<T> {
