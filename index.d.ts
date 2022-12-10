@@ -1,7 +1,5 @@
 import React from 'react';
 
-type T = any;
-
 type HeaderTypes =
     'fixed';
 
@@ -103,18 +101,18 @@ type HeaderOption = {
     bold: boolean | undefined;
 }
 
-type JumbotronBtn = [
+type JumbotronBtn<T> = [
     string,
     JSX.Element,
     React.AllHTMLAttributes<T> | undefined,
 ]
 
-type BlankslateBtn = [
+type BlankslateBtn<T> = [
     JSX.Element,
     React.AllHTMLAttributes<T> | undefined,
 ]
 
-interface HeaderProps extends React.HTMLAttributes<T> {
+interface HeaderProps<T> extends React.HTMLAttributes<T> {
     type?: HeaderTypes;
     /**a string as the title */
     title: string;
@@ -129,13 +127,13 @@ interface AlertProps {
     type: AlertTypes;
 }
 
-interface ButtonProps extends React.ButtonHTMLAttributes<T> {
+interface ButtonProps<T> extends React.ButtonHTMLAttributes<T> {
     /**a string or an array to specify the type of the Button element */
     WuXType: ButtonTypes | ButtonTypes[];
     JSXType: JSX.Element;
 }
 
-interface ButtonGroupProps extends React.HTMLAttributes<T> {
+interface ButtonGroupProps<T> extends React.HTMLAttributes<T> {
     /**a string */
     type: ButtonGroupTypes | ButtonGroupTypes[];
 }
@@ -151,7 +149,7 @@ interface BreadcrumbProps {
     item: string | string[];
 }
 
-interface CardProps extends React.HTMLAttributes<T> {
+interface CardProps<T> extends React.HTMLAttributes<T> {
     /**a string */
     type: CardTypes;
     /**a JSX element */
@@ -162,7 +160,7 @@ interface CardProps extends React.HTMLAttributes<T> {
     footer: JSX.Element;
 }
 
-interface DialogProps extends React.DialogHTMLAttributes<T> {
+interface DialogProps<T> extends React.DialogHTMLAttributes<T> {
     /**a string */
     id: string;
     /**a string */
@@ -184,34 +182,34 @@ interface DropdownProps {
     btn?: JSX.Element;
 }
 
-interface InputProps extends React.InputHTMLAttributes<T> {
+interface InputProps<T> extends React.InputHTMLAttributes<T> {
     /**a string to specify the size of the Input element */
     WuXSize: InputSizes;
 }
 
-interface RadioProps extends React.InputHTMLAttributes<T> {
+interface RadioProps<T> extends React.InputHTMLAttributes<T> {
     /**a JSX element to specify the link between the each options of Radio element */
     suffix?: string | JSX.Element;
     /**an array of string to specify options for the Radio element */
     children: string[];
 }
 
-interface SelectProps extends React.SelectHTMLAttributes<T> {
+interface SelectProps<T> extends React.SelectHTMLAttributes<T> {
     /**a JSX element to specify the value value of the option for each Select element */
     value?: string;
     /**an array of string to specify options for the Select element */
     children: string[];
 }
 
-interface LoadingButtonProps extends React.ButtonHTMLAttributes<T> {
+interface LoadingButtonProps<T> extends React.ButtonHTMLAttributes<T> {
     type: 'button';
 }
 
-interface LoadingSpanProps extends React.HTMLAttributes<T> {
+interface LoadingSpanProps<T> extends React.HTMLAttributes<T> {
     type: 'span';
 }
 
-interface JumbotronProps {
+interface JumbotronProps<T> {
     /**a JSX element */
     before: JSX.Element;
     /**a string or a JSX element */
@@ -219,30 +217,30 @@ interface JumbotronProps {
     /**a string or a JSX element to specify a subtitle */
     subtitle?: string | JSX.Element;
     /**JSX elements to specify the button style of the Jumbotron element */
-    btn?: JumbotronBtn[];
+    btn?: JumbotronBtn<T>[];
     /**a string */
     align: JumbotronAlign;
     /**a JSX element */
     after: JSX.Element;
 }
 
-interface JumbotronTitleBlodProps extends React.HTMLAttributes<T> {
+interface JumbotronTitleBlodProps<T> extends React.HTMLAttributes<T> {
     type: JSX.Element;
 }
 
-interface ListProps extends React.HTMLAttributes<T> {
+interface ListProps<T> extends React.HTMLAttributes<T> {
     /**an array with ListTypes or an array composed of ListTypes */
     type: ListTypes[] | ListTypes[][];
     /**the list text displayed by the List element */
     children: string[];
 }
 
-interface ProgressProps extends React.ProgressHTMLAttributes<T> {
+interface ProgressProps<T> extends React.ProgressHTMLAttributes<T> {
     value: string | number;
     max: string | number;
 }
 
-interface TooltipProps extends React.ButtonHTMLAttributes<T> {
+interface TooltipProps<T> extends React.ButtonHTMLAttributes<T> {
     /**a JSX element to specify the button style of the Tooltip element */
     btn?: JSX.Element;
     /**a string of ListTypes */
@@ -251,22 +249,23 @@ interface TooltipProps extends React.ButtonHTMLAttributes<T> {
     text: string;
 }
 
-interface TableProps extends React.TableHTMLAttributes<T> { }
+interface TableProps<T> extends React.TableHTMLAttributes<T> { }
 
-interface TagProps extends React.HTMLAttributes<T> {
+interface TagProps<T> extends React.HTMLAttributes<T> {
     type: TagTypes | TagTypes[];
 }
 
-interface BadgeProps extends React.HTMLAttributes<T> { }
+interface BadgeProps<T> extends React.HTMLAttributes<T> { }
 
-interface TabProps extends React.HTMLAttributes<T> {
+interface TabProps<T> extends React.HTMLAttributes<T> {
     /**an array of strings, which is displayed as the tab name of the Tab element */
-    name: string[];
+    name: T[];
     /**an array of strings or an array of JSX element, displayed as the page under the corresponding tab */
-    children: string[] | JSX.Element[];
+    children: (string | number | JSX.Element)[];
+    forEach: (name: T) => string | number | JSX.Element;
 }
 
-interface BlankslateProps extends React.HTMLAttributes<T> {
+interface BlankslateProps<T> extends React.HTMLAttributes<T> {
     /**a JSX element to specify the icon the Blankslate element */
     icon?: JSX.Element;
     /**a string or a JSX element */
@@ -274,10 +273,10 @@ interface BlankslateProps extends React.HTMLAttributes<T> {
     /**a string or a JSX element to specify a subtitle */
     subtitle?: string | JSX.Element;
     /**JSX elements to specify the button style of the Blankslate element  */
-    btn?: BlankslateBtn[];
+    btn?: BlankslateBtn<T>[];
 }
 
-interface CollapseProps extends React.HTMLAttributes<T> {
+interface CollapseProps<T> extends React.HTMLAttributes<T> {
     /**a string, which is displayed as the summary of the Collapse element */
     summary: string;
     /**a string or a JSX element, displayed as the collapse of the Collapse element */
@@ -309,7 +308,7 @@ declare const WuX: {
      * 
      * @param {HeaderProps} props an object with `title`, `small` and `option` as properties
      */
-    Header: (props: HeaderProps) => JSX.Element;
+    Header<T>(props: HeaderProps<T>): JSX.Element;
     /**Container element */
     Container: (props: any) => JSX.Element;
     /**Row element
@@ -356,7 +355,7 @@ declare const WuX: {
      * 
      * @param {ButtonProps} props an object with `type` as property
      */
-    Button: (props: ButtonProps) => JSX.Element;
+    Button<T>(props: ButtonProps<T>): JSX.Element;
     /**ButtonGroup element
      *   
      * The parameter `props` should be an object with `type` as property  
@@ -374,7 +373,7 @@ declare const WuX: {
      * 
      * @param {ButtonGroupProps} props an object with `type` as property 
      */
-    ButtonGroup: (props: ButtonGroupProps) => JSX.Element;
+    ButtonGroup<T>(props: ButtonGroupProps<T>): JSX.Element;
     /**Breadcrumb element
      *   
      * The parameter `props` should be an object with `item` as property  
@@ -409,7 +408,7 @@ declare const WuX: {
      * 
      * @param {CardProps} props an object with `header`, `body` and `footer` as properties
      */
-    Card: (props: CardProps) => JSX.Element;
+    Card<T>(props: CardProps<T>): JSX.Element;
     /**Dialog element
      *   
      * The parameter `props` should be an object with `id`, `header`, `body`, `cancel` and `footer` as properties  
@@ -432,7 +431,7 @@ declare const WuX: {
      * 
      * @param {DialogProps} props an object with `id`, `header`, `body`, `cancel` and `footer` as properties
      */
-    Dialog: (props: DialogProps) => JSX.Element;
+    Dialog<T>(props: DialogProps<T>): JSX.Element;
     /**Dropdown element
      *   
      * The parameter `props` should be an object with `menu` as property  
@@ -465,11 +464,11 @@ declare const WuX: {
      * 
      * @param {InputProps} props an object with `size` as property
      */
-    Input: (props: InputProps) => JSX.Element;
+    Input<T>(props: InputProps<T>): JSX.Element;
     /**Textarea element */
-    Textarea: (props: React.TextareaHTMLAttributes<T>) => JSX.Element;
+    Textarea<T>(props: React.TextareaHTMLAttributes<T>): JSX.Element;
     /**Check element */
-    Check: (props: React.InputHTMLAttributes<T>) => JSX.Element;
+    Check<T>(props: React.InputHTMLAttributes<T>): JSX.Element;
     /**Radio element
      *   
      * The parameter `props` should be an object with `children` as property  
@@ -486,9 +485,9 @@ declare const WuX: {
      * 
      * @param {RadioProps} props an object with `children` as property
      */
-    Radio: (props: RadioProps) => JSX.Element;
+    Radio<T>(props: RadioProps<T>): JSX.Element;
     /**Range element */
-    Range: (props: React.InputHTMLAttributes<T>) => JSX.Element;
+    Range<T>(props: React.InputHTMLAttributes<T>): JSX.Element;
     /**Select element
      *   
      * The parameter `props` should be an object with `children` as property  
@@ -505,11 +504,11 @@ declare const WuX: {
      * 
      * @param {SelectProps} props an object with `children` as property
      */
-    Select: (props: SelectProps) => JSX.Element;
+    Select<T>(props: SelectProps<T>): JSX.Element;
     /**Upload element */
-    Upload: (props: React.InputHTMLAttributes<T>) => JSX.Element;
+    Upload<T>(props: React.InputHTMLAttributes<T>): JSX.Element;
     /**Loading element */
-    Loading: (props: LoadingButtonProps | LoadingSpanProps) => JSX.Element;
+    Loading<T>(props: LoadingButtonProps<T> | LoadingSpanProps<T>): JSX.Element;
     /**Jumbotron element
      *   
      * The parameter `props` should be an object with `title` as property  
@@ -537,9 +536,9 @@ declare const WuX: {
      * 
      * @param {JumbotronProps} props an object with `title` as property
      */
-    Jumbotron: (props: JumbotronProps) => JSX.Element;
+    Jumbotron<T>(props: JumbotronProps<T>): JSX.Element;
     /**JumbotronTitleBlod element */
-    JumbotronTitleBlod: (props: JumbotronTitleBlodProps) => JSX.Element;
+    JumbotronTitleBlod<T>(props: JumbotronTitleBlodProps<T>): JSX.Element;
     /**List element
      *   
      * The parameter `props` should be an object with `type` and `children` as properties  
@@ -565,9 +564,9 @@ declare const WuX: {
      * 
      * @param {ListProps} props an object with `type` and `children` as properties
      */
-    List: (props: ListProps) => JSX.Element;
+    List<T>(props: ListProps<T>): JSX.Element;
     /**Progress element */
-    Progress: (props: ProgressProps) => JSX.Element;
+    Progress<T>(props: ProgressProps<T>): JSX.Element;
     /**Tooltip element
      *   
      * The parameter `props` should be an object with `type` and `text` as properties  
@@ -582,7 +581,7 @@ declare const WuX: {
      * 
      * @param {TooltipProps} props an object with `type` and `text` as properties
      */
-    Tooltip: (props: TooltipProps) => JSX.Element;
+    Tooltip<T>(props: TooltipProps<T>): JSX.Element;
     /**Table element
      *   
      * This is an example of a Table element :
@@ -595,7 +594,7 @@ declare const WuX: {
     * }}</WuX.Table>
      * ```
      */
-    Table: (props: TableProps) => JSX.Element;
+    Table<T>(props: TableProps<T>): JSX.Element;
     /**Tag element
      *   
      * These are some examples of Tag element :
@@ -608,11 +607,11 @@ declare const WuX: {
      * </WuX.Tag>
      * ```
      */
-    Tag: (props: TagProps) => JSX.Element;
+    Tag<T>(props: TagProps<T>): JSX.Element;
     /**Badge element */
-    Badge: (props: BadgeProps) => JSX.Element;
+    Badge<T>(props: BadgeProps<T>): JSX.Element;
     /**Search element */
-    Search: (props: React.InputHTMLAttributes<T>) => JSX.Element;
+    Search<T>(props: React.InputHTMLAttributes<T>): JSX.Element;
     /**Tab element
      *    
      * The parameter `props` should be an object with `name` and `children` as properties  
@@ -630,7 +629,7 @@ declare const WuX: {
      * 
      * @param {TabProps} props an object with `name` and `children` as properties
      */
-    Tab: (props: TabProps) => JSX.Element;
+    Tab<T>(props: TabProps<T>): JSX.Element;
     /**Blankslate element
      *   
      * The parameter `props` should be an object with `title` as property  
@@ -654,9 +653,9 @@ declare const WuX: {
      * 
      * @param {BlankslateProps} props an object with `title` as property
      */
-    Blankslate: (props: BlankslateProps) => JSX.Element;
+    Blankslate<T>(props: BlankslateProps<T>): JSX.Element;
     /**Typo element */
-    Typo: (props: React.HTMLAttributes<T>) => JSX.Element;
+    Typo<T>(props: React.HTMLAttributes<T>): JSX.Element;
     /**Collapse element
      *    
      * The parameter `props` should be an object with `summary` and `collapse` as properties  
@@ -669,7 +668,7 @@ declare const WuX: {
      * 
      * @param {CollapseProps} props an object with `summary` and `collapse` as properties
      */
-    Collapse: (props: CollapseProps) => JSX.Element;
+    Collapse<T>(props: CollapseProps<T>): JSX.Element;
 }
 
 export default WuX;
