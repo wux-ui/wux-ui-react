@@ -113,10 +113,11 @@ type BlankslateBtn<T> = [
 ]
 
 interface HeaderProps<T> extends React.HTMLAttributes<T> {
+    /**a string to specify the type of the Header element */
     type?: HeaderTypes;
     /**a string as the title */
     title: string;
-    /**a button for displaying options on the mobile terminal */
+    /**a text or element of the button for displaying options on the mobile terminal */
     small?: string | JSX.Element;
     /**an array and links each item of the array to the second item displayed on the right with the first item as the title */
     option: (HeaderOption | JSX.Element)[];

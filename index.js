@@ -19,7 +19,6 @@ function getClass(defaultValue, type, noDefault = false) {
 }
 
 const WuX = {
-    HeaderMargin: props => <div className="wux-header-fixed-margin">{props.children}</div>,
     Header: ({ type, option, title, small, ...otherProps }) => {
         let optionGroup = option.map((v, i) => {
             if (v.constructor.toString().split(' ')[1].split('(')[0] === 'Object') {
@@ -32,18 +31,21 @@ const WuX = {
                     return <a
                         className={`wux-header-option${bold ? ' wux-header-option-bold' : ''}`}
                         href={link}
-                        key={i}>
-                        {title}
-                    </a>;
+                        key={i}
+                        children={title}
+                    />;
                 }
             }
             else return <></>;
         });
-        return <nav className={type ? getClass('wux-header', type) : 'wux-header'} {...otherProps}>
-            <span className="wux-header-title">{title}</span>
-            <button className="wux-header-small-option-group">{small}</button>
-            <span className="wux-header-option-group">{optionGroup}</span>
-        </nav>
+        const returnElem = (
+            <nav className={type ? getClass('wux-header', type) : 'wux-header'} {...otherProps}>
+                <span className="wux-header-title">{title}</span>
+                <button className="wux-header-small-option-group">{small}</button>
+                <span className="wux-header-option-group">{optionGroup}</span>
+            </nav>
+        );
+        return type === 'fixed' ? (<div className="wux-header-fixed-margin">{returnElem}</div>) : returnElem;
     },
     Container: props => <div className="wux-container">{props.children}</div>,
     Row: props => {
