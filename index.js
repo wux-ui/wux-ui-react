@@ -232,11 +232,11 @@ const WuX = {
     Tag: ({ type, children, ...otherProps }) => <span className={getClass('wux-tag', type, (type && type.includes('close')))} {...otherProps}>{children}</span>,
     Badge: ({ children, ...otherProps }) => <span className="wux-badge" {...otherProps}>{children}</span>,
     Search: props => <input className="wux-search" {...props} />,
-    Tab: ({ name, children, forEach, ...otherProps }) => {
+    Tab: ({ names, children, forEach, ...otherProps }) => {
         const [state, setState] = useState({ checked: "tab-0" });
         let childrenContent = children;
-        if (forEach) childrenContent = name.map(forEach);
-        let tabs = name.map((v, i) => [
+        if (forEach) childrenContent = names.map(forEach);
+        let tabs = names.map((v, i) => [
             <input
                 className="wux-tab-item"
                 type="radio"
@@ -281,4 +281,4 @@ const WuX = {
 
 export default WuX;
 
-export const supports = (component) => WuX[component] === undefined;
+export const supports = (component) => WuX[component] !== undefined;

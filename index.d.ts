@@ -257,12 +257,12 @@ interface TagProps<T> extends React.HTMLAttributes<T> {
 
 interface BadgeProps<T> extends React.HTMLAttributes<T> { }
 
-interface TabProps<T> extends React.HTMLAttributes<T> {
+interface TabProps<T, N = T[]> extends React.HTMLAttributes<T> {
     /**an array of strings, which is displayed as the tab name of the Tab element */
-    name: T[];
+    names: N;
     /**an array of strings or an array of JSX element, displayed as the page under the corresponding tab */
     children: (string | number | JSX.Element)[];
-    forEach: (name: T) => string | number | JSX.Element;
+    forEach: (name: T, index: number, names: N) => string | number | JSX.Element;
 }
 
 interface BlankslateProps<T> extends React.HTMLAttributes<T> {
@@ -345,15 +345,15 @@ declare const WuX: {
     Alert: (props: AlertProps) => JSX.Element;
     /**Button element
      *   
-     * The parameter `props` should be an object with `type` as property  
-     * `type` is a string or an array to specify the type of the Button element  
+     * The parameter `props` should be an object with `WuXType` as property  
+     * `WuXType` is a string or an array to specify the type of the Button element  
      *   
      * This is an example of a Button element :
      * ```js
-     * <WuX.Button type='primary'>Primary</WuX.Button>
+     * <WuX.Button WuXType='primary'>Primary</WuX.Button>
      * ```
      * 
-     * @param {ButtonProps} props an object with `type` as property
+     * @param {ButtonProps} props an object with `WuXType` as property
      */
     Button<T>(props: ButtonProps<T>): JSX.Element;
     /**ButtonGroup element
@@ -454,15 +454,15 @@ declare const WuX: {
     Dropdown: (props: DropdownProps) => JSX.Element;
     /**Input element
      *   
-     * The parameter `props` should be an object with `size` as property  
-     * `size` is a string to specify the size of the Input element  
+     * The parameter `props` should be an object with `WuXSize` as property  
+     * `WuXSize` is a string to specify the size of the Input element  
      *   
      * This is an example of a Input element :
      * ```js
-     * <WuX.Input size='xs'>xs</WuX.Input>
+     * <WuX.Input WuXSize='xs'>xs</WuX.Input>
      * ```
      * 
-     * @param {InputProps} props an object with `size` as property
+     * @param {InputProps} props an object with `WuXSize` as property
      */
     Input<T>(props: InputProps<T>): JSX.Element;
     /**Textarea element */
@@ -569,17 +569,17 @@ declare const WuX: {
     Progress<T>(props: ProgressProps<T>): JSX.Element;
     /**Tooltip element
      *   
-     * The parameter `props` should be an object with `type` and `text` as properties  
+     * The parameter `props` should be an object with `WuXType` and `text` as properties  
      * `text` is a string  
-     * `type` is a string of ListTypes  
+     * `WuXType` is a string of ListTypes  
      * You can use `btn` to specify the button style of the Tooltip element  
      *   
      * This is an example of a Tooltip element :
      * ```js
-     * <WuX.Tooltip type='top' text='This is a Tooltip.'>Top</WuX.Tooltip>
+     * <WuX.Tooltip WuXType='top' text='This is a Tooltip.'>Top</WuX.Tooltip>
      * ```
      * 
-     * @param {TooltipProps} props an object with `type` and `text` as properties
+     * @param {TooltipProps} props an object with `WuXType` and `text` as properties
      */
     Tooltip<T>(props: TooltipProps<T>): JSX.Element;
     /**Table element
