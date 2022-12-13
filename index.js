@@ -18,11 +18,15 @@ function getClass(defaultValue, type, noDefault = false) {
     else return defaultValue;
 }
 
+function isReactElement(element) {
+    return element.$$typeof === (<a />).$$typeof;
+}
+
 const WuX = {
-    Header: ({ type, option, title, small, ...otherProps }) => {
+    Header: ({ type, option, title, small, children, ...otherProps }) => {
         let optionGroup = option.map((v, i) => {
             if (v.constructor.toString().split(' ')[1].split('(')[0] === 'Object') {
-                if (v.$$typeof === (<p />).$$typeof) {
+                if (isReactElement(v)) {
                     let Type = v.type;
                     return <Type key={i} {...v.props} />;
                 }
@@ -38,13 +42,14 @@ const WuX = {
             }
             else return <></>;
         });
-        const returnElem = (
+        const returnElem = <>
             <nav className={type ? getClass('wux-header', type) : 'wux-header'} {...otherProps}>
                 <span className="wux-header-title">{title}</span>
                 <button className="wux-header-small-option-group">{small}</button>
                 <span className="wux-header-option-group">{optionGroup}</span>
             </nav>
-        );
+            {children}
+        </>;
         return type === 'fixed' ? (<div className="wux-header-fixed-margin">{returnElem}</div>) : returnElem;
     },
     Container: props => <div className="wux-container">{props.children}</div>,
@@ -279,6 +284,28 @@ const WuX = {
             <summary>{summary}</summary>
             <div>{collapse}</div>
         </details>,
+    Utilities: ({ type, attr }) => {
+        const Supports = [
+            'text-align',
+            'vertical-align',
+            'bg-repeat',
+            'bg-position',
+            'bg-position-x',
+            'bg-position-y',
+            'bg-size',
+            'border-style',
+            'border-top-style',
+            'border-bottom-style',
+            'border-left-style',
+            'border-right-style',
+            'float',
+            'visibility',
+        ];
+        const T = type.type;
+        let style = {};
+        for (let attrName in attr) if (!Supports.includes(attrName)) style[`--attr-custom-${attrName}`] = attr[attrName];
+        return <T style={{ ...style, ...type.props.style }} {...attr} {...type.props} />
+    },
 }
 
 export default WuX;

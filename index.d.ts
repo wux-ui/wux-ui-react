@@ -98,7 +98,7 @@ type JumbotronAlign =
 type HeaderOption = {
     title: string;
     link: string;
-    bold: boolean | undefined;
+    bold?: boolean;
 }
 
 type JumbotronBtn<T> = [
@@ -112,6 +112,63 @@ type BlankslateBtn<T> = [
     React.AllHTMLAttributes<T> | undefined,
 ]
 
+type Attrs = {
+    'text-align'?: React.CSSProperties['textAlign'];
+    'vertical-align'?: React.CSSProperties['verticalAlign'];
+    'vertical-align-num'?: React.CSSProperties['verticalAlign'];
+    'bg-color'?: React.CSSProperties['backgroundColor'];
+    'bg-img'?: React.CSSProperties['backgroundImage'];
+    'bg-repeat'?: React.CSSProperties['backgroundRepeat'];
+    'bg-position'?: React.CSSProperties['backgroundPosition'];
+    'bg-position-x'?: React.CSSProperties['backgroundPositionX'];
+    'bg-position-y'?: React.CSSProperties['backgroundPositionY'];
+    'bg-size'?: React.CSSProperties['backgroundSize'];
+    'bg-size-num'?: React.CSSProperties['backgroundSize'];
+    'border-width'?: React.CSSProperties['borderWidth'];
+    'border-top-width'?: React.CSSProperties['borderTopWidth'];
+    'border-bottom-width'?: React.CSSProperties['borderBottomWidth'];
+    'border-left-width'?: React.CSSProperties['borderLeftWidth'];
+    'border-right-width'?: React.CSSProperties['borderRightWidth'];
+    'border-color'?: React.CSSProperties['borderColor'];
+    'border-top-color'?: React.CSSProperties['borderTopColor'];
+    'border-bottom-color'?: React.CSSProperties['borderBottomColor'];
+    'border-left-color'?: React.CSSProperties['borderLeftColor'];
+    'border-right-color'?: React.CSSProperties['borderRightColor'];
+    'border-radius'?: React.CSSProperties['borderRadius'];
+    'border-top-left-radius'?: React.CSSProperties['borderTopLeftRadius'];
+    'border-top-right-radius'?: React.CSSProperties['borderTopRightRadius'];
+    'border-bottom-left-radius'?: React.CSSProperties['borderBottomLeftRadius'];
+    'border-bottom-right-radius'?: React.CSSProperties['borderBottomRightRadius'];
+    'border-style'?: React.CSSProperties['borderStyle'];
+    'border-top-style'?: React.CSSProperties['borderTopStyle'];
+    'border-bottom-style'?: React.CSSProperties['borderBottomStyle'];
+    'border-left-style'?: React.CSSProperties['borderLeftStyle'];
+    'border-right-style'?: React.CSSProperties['borderRightStyle'];
+    'border-spacing'?: React.CSSProperties['borderSpacing'];
+    float?: React.CSSProperties['float'];
+    'font-size'?: React.CSSProperties['fontSize'];
+    margin?: React.CSSProperties['margin'];
+    'margin-top'?: React.CSSProperties['marginTop'];
+    'margin-bottom'?: React.CSSProperties['marginBottom'];
+    'margin-left'?: React.CSSProperties['marginLeft'];
+    'margin-right'?: React.CSSProperties['marginRight'];
+    opacity?: React.CSSProperties['opacity'];
+    overflow?: React.CSSProperties['overflow'];
+    padding?: React.CSSProperties['padding'];
+    'padding-top'?: React.CSSProperties['paddingTop'];
+    'padding-bottom'?: React.CSSProperties['paddingBottom'];
+    'padding-left'?: React.CSSProperties['paddingLeft'];
+    'padding-right'?: React.CSSProperties['paddingRight'];
+    top?: React.CSSProperties['top'];
+    bottom?: React.CSSProperties['bottom'];
+    right?: React.CSSProperties['right'];
+    left?: React.CSSProperties['left'];
+    'text-color'?: React.CSSProperties['color'];
+    visibility?: React.CSSProperties['visibility'];
+    width?: React.CSSProperties['width'];
+    height?: React.CSSProperties['height'];
+}
+
 interface HeaderProps<T> extends React.HTMLAttributes<T> {
     /**a string to specify the type of the Header element */
     type?: HeaderTypes;
@@ -121,6 +178,7 @@ interface HeaderProps<T> extends React.HTMLAttributes<T> {
     small?: string | JSX.Element;
     /**an array and links each item of the array to the second item displayed on the right with the first item as the title */
     option: (HeaderOption | JSX.Element)[];
+    children: JSX.Element;
 }
 
 interface AlertProps {
@@ -284,9 +342,12 @@ interface CollapseProps<T> extends React.HTMLAttributes<T> {
     collapse: JSX.Element | string;
 }
 
+interface UtilitiesProps<A> {
+    type: JSX.Element;
+    attr: A;
+}
+
 declare const WuX: {
-    /**Header fixed margin */
-    HeaderMargin: (props: any) => JSX.Element;
     /**Header element  
      *   
      * The parameter `props` should be an object with `title`, `small` and `option` as properties  
@@ -670,6 +731,8 @@ declare const WuX: {
      * @param {CollapseProps} props an object with `summary` and `collapse` as properties
      */
     Collapse<T>(props: CollapseProps<T>): JSX.Element;
+    /**Utilities element */
+    Utilities(props: UtilitiesProps<Attrs>): JSX.Element;
 }
 
 export default WuX;
