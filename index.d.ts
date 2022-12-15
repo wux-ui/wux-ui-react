@@ -176,9 +176,9 @@ interface HeaderProps<T> extends React.HTMLAttributes<T> {
     title: string;
     /**a text or element of the button for displaying options on the mobile terminal */
     small?: string | JSX.Element;
-    /**an array and links each item of the array to the second item displayed on the right with the first item as the title */
+    /**an array with objects which is consist of `title`, `link` and `bold`*/
     option: (HeaderOption | JSX.Element)[];
-    children: JSX.Element;
+    children?: JSX.Element;
 }
 
 interface AlertProps {
