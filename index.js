@@ -284,7 +284,7 @@ const WuX = {
             <summary>{summary}</summary>
             <div>{collapse}</div>
         </details>,
-    Utilities: ({ type, attr }) => {
+    Utility: ({ type, attr }) => {
         const Supports = [
             'text-align',
             'vertical-align',

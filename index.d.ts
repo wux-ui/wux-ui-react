@@ -105,12 +105,12 @@ type JumbotronBtn<T> = [
     string,
     JSX.Element,
     React.AllHTMLAttributes<T> | undefined,
-]
+];
 
 type BlankslateBtn<T> = [
     JSX.Element,
     React.AllHTMLAttributes<T> | undefined,
-]
+];
 
 type Attrs = {
     'text-align'?: React.CSSProperties['textAlign'];
@@ -321,6 +321,8 @@ interface TabProps<T, N = T[]> extends React.HTMLAttributes<T> {
     names: N;
     /**an array of strings or an array of JSX element, displayed as the page under the corresponding tab */
     children: (string | number | JSX.Element)[];
+    /**A callback function with the same {@link names}.map parameter, 
+     * which the return is the Tab corresponding to the parameter {@link name} */
     forEach: (name: T, index: number, names: N) => string | number | JSX.Element;
 }
 
@@ -342,7 +344,7 @@ interface CollapseProps<T> extends React.HTMLAttributes<T> {
     collapse: JSX.Element | string;
 }
 
-interface UtilitiesProps<A> {
+interface UtilityProps<A> {
     type: JSX.Element;
     attr: A;
 }
@@ -372,7 +374,7 @@ declare const WuX: {
      */
     Header<T>(props: HeaderProps<T>): JSX.Element;
     /**Container element */
-    Container: (props: any) => JSX.Element;
+    Container: (props: null) => JSX.Element;
     /**Row element
      *   
      * The parameter `props` should be an object with `size` and `number` as properties  
@@ -391,7 +393,7 @@ declare const WuX: {
      */
     Row: (props: RowProps) => JSX.Element;
     /**Col element */
-    Col: (props: any) => JSX.Element;
+    Col: (props: null) => JSX.Element;
     /**Alert element
      *   
      * The parameter `props` should be an object with `type` as property  
@@ -726,15 +728,46 @@ declare const WuX: {
      *   
      * This is an example of a Collapse element :
      * ```js
+     * <WuX.Collapse
+     *     summary='Hello!'
+     *     collapse='This is a Test Collapse.'
+     * />
      * ```
      * 
      * @param {CollapseProps} props an object with `summary` and `collapse` as properties
      */
     Collapse<T>(props: CollapseProps<T>): JSX.Element;
-    /**Utilities element */
-    Utilities(props: UtilitiesProps<Attrs>): JSX.Element;
+    /**Utilities element
+     * 
+     * The parameter `props` should be an object with `type` and `attr` as properties  
+     * `type` is a JSX element to specify the defalut element of Utility element  
+     * `attr` id an object to specify the attr of Utility element
+     * 
+     * This is an example of a Utility element :  
+     * ```js
+     * <WuX.Utility
+     *     type={<p> Border~ </p>}
+     *     attr={{
+     *         'border-bottom-color': '#CCCCCC',
+     *         'border-bottom-style': 'dashed',
+     *         'border-bottom-width': '4px',
+     *     }}
+     * />
+     * ```
+     * In the DOM : 
+     * ```html
+     * <p border-bottom-color="#CCCCCC" border-bottom-style="dashed" border-bottom-width="4px" style="--attr-custom-border-bottom-color:#CCCCCC; --attr-custom-border-bottom-width:4px;"> Border~ </p>
+     * ```
+     * 
+     * *Attention*: This is an additional component to support an existing standard with little browser support.
+     * It can be supported only with this package.
+     * 
+     * @param {UtilityProps<Attrs>} props an object with `type` and `attr` as properties
+     */
+    Utility(props: UtilityProps<Attrs>): JSX.Element;
 }
 
 export default WuX;
 
+/**Check if WuX supports `component` */
 export const supports: (component: string) => boolean;
