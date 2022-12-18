@@ -19,7 +19,7 @@ function getClass(defaultValue, type, noDefault = false) {
 }
 
 function isReactElement(element) {
-    return element.$$typeof === (<a />).$$typeof;
+    return element.$$typeof === (<div />).$$typeof;
 }
 
 const WuX = {
