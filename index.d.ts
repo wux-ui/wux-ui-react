@@ -182,7 +182,7 @@ interface HeaderProps<T> extends React.HTMLAttributes<T> {
 }
 
 interface AlertProps {
-    /**a string */
+    /**a string to specify the type of the Alert element */
     type: AlertTypes;
 }
 
