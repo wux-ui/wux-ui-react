@@ -66,7 +66,7 @@ const WuX = {
                 break;
         }
     },
-    Col: props => <div className="wux-col">{props.children}</div>,
+    Col: ({ children, ...otherProps }) => <div className="wux-col" {...otherProps}>{children}</div>,
     Alert: props => {
         if (['icon', 'option-group'].includes(props.type)) return <span className={`wux-alert-${props.type}`}>{props.children}</span>
         else return <div className={`wux-alert wux-alert-${props.type}`}>{props.children}</div>
