@@ -1,8 +1,8 @@
 {
-  "name": "wux-ui-react",
+  "name": "@wux-ui/react",
   "version": "1.1.1",
   "description": "WuX-UI for React.js",
-  "main": "index.js",
+  "main": "build.js",
   "keywords": [
     "wuxui"
   ],
@@ -16,5 +16,8 @@
   "bugs": {
     "url": "https://github.com/wux-ui/wux-ui-react/issues"
   },
-  "homepage": "https://github.com/wux-ui/wux-ui-react#readme"
+  "homepage": "https://github.com/wux-ui/wux-ui-react#readme",
+  "publishConfig": {
+    "access": "public"
+  }
 }
